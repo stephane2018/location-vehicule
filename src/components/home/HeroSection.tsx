@@ -1,8 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { Search, Calendar, MapPin, Tag, ArrowRight, Shield, Star, Clock } from "lucide-react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import {
+  Search,
+  Calendar,
+  MapPin,
+  Tag,
+  Shield,
+  Star,
+  Clock,
+  Car,
+  Fuel,
+  Settings2,
+  Gauge,
+  Key,
+  Navigation,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +27,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { VEHICLES } from "@/utils/vehicleData";
+
+// ─── Constants ───────────────────────────────────────────────────────────────
 
 const AGENCIES = [
   { value: "abidjan-cocody", label: "Abidjan — Cocody" },
@@ -32,40 +49,72 @@ const CATEGORIES = [
 ] as const;
 
 const TRUST_BADGES = [
-  { icon: Shield, label: "Assurance incluse" },
+  { icon: Shield, label: "Assurance tous risques" },
   { icon: Star, label: "4.9/5 — 2 400+ avis" },
   { icon: Clock, label: "Annulation gratuite 48h" },
 ] as const;
 
+const HERO_SLIDES = [
+  VEHICLES[3],  // Mercedes C-Class
+  VEHICLES[4],  // Land Cruiser
+  VEHICLES[11], // Lamborghini Urus
+  VEHICLES[9],  // Porsche Cayenne
+  VEHICLES[0],  // Toyota Corolla
+  VEHICLES[1],  // Hyundai Tucson
+];
+
+const BG_ICONS = [
+  { icon: Car, top: "10%", left: "5%", size: "size-10", opacity: "opacity-[0.03]", rotate: "-rotate-12" },
+  { icon: Fuel, top: "20%", right: "8%", size: "size-8", opacity: "opacity-[0.04]", rotate: "rotate-6" },
+  { icon: Settings2, top: "55%", left: "3%", size: "size-9", opacity: "opacity-[0.03]", rotate: "rotate-12" },
+  { icon: Gauge, top: "38%", right: "4%", size: "size-11", opacity: "opacity-[0.035]", rotate: "-rotate-6" },
+  { icon: Key, top: "75%", left: "8%", size: "size-7", opacity: "opacity-[0.04]", rotate: "rotate-15" },
+  { icon: Navigation, top: "68%", right: "10%", size: "size-8", opacity: "opacity-[0.03]", rotate: "-rotate-20" },
+  { icon: Shield, top: "12%", left: "42%", size: "size-6", opacity: "opacity-[0.025]", rotate: "rotate-3" },
+  { icon: Star, top: "82%", right: "28%", size: "size-7", opacity: "opacity-[0.03]", rotate: "-rotate-8" },
+];
+
+// ─── Hero Section ────────────────────────────────────────────────────────────
+
 export function HeroSection() {
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [agency, setAgency] = useState("");
   const [category, setCategory] = useState("");
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   function handleSearch() {
     console.log({ startDate, endDate, agency, category });
   }
 
+  const currentVehicle = HERO_SLIDES[currentSlide];
+
   return (
     <section className="relative overflow-hidden" aria-label="Recherche de véhicules">
-      {/* Dark editorial background */}
-      <div className="absolute inset-0 bg-[oklch(0.13_0.02_250)]" />
+      {/* ── Dark base ── */}
+      <div className="absolute inset-0 bg-[oklch(0.10_0.02_250)]" />
 
-      {/* Subtle gradient overlay */}
+      {/* ── Radial accent ── */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 70% 50% at 70% 40%, oklch(0.3 0.15 260 / 0.25), transparent)",
+            "radial-gradient(ellipse 60% 50% at 25% 45%, oklch(0.25 0.15 260 / 0.25), transparent)",
         }}
       />
 
-      {/* Fine grid pattern */}
+      {/* ── Grid pattern ── */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        className="pointer-events-none absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage:
             "linear-gradient(oklch(1 0 0) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0) 1px, transparent 1px)",
@@ -73,9 +122,26 @@ export function HeroSection() {
         }}
       />
 
+      {/* ── Background icons ── */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        {BG_ICONS.map((item, i) => {
+          const Icon = item.icon;
+          return (
+            <div
+              key={i}
+              className={`absolute text-white ${item.opacity} ${item.rotate}`}
+              style={{ top: item.top, left: item.left, right: item.right }}
+            >
+              <Icon className={item.size} strokeWidth={1} />
+            </div>
+          );
+        })}
+      </div>
+
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-12 pb-16 pt-20 sm:pt-24 lg:grid-cols-2 lg:gap-16 lg:pb-24 lg:pt-32">
-          {/* Left: editorial text */}
+        {/* ── Two-column: text left + slideshow right ── */}
+        <div className="grid grid-cols-1 items-center gap-10 pt-20 sm:pt-24 lg:grid-cols-2 lg:gap-16 lg:pt-32 pb-10 lg:pb-14">
+          {/* ── Left: text ── */}
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-sm">
               <div className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -84,16 +150,17 @@ export function HeroSection() {
               </span>
             </div>
 
-            <h1 className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]">
-              L&apos;excellence de la
-              <span className="block mt-1 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-                location automobile
+            <h1 className="mt-7 text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]">
+              Roulez sans limites
+              <span className="block mt-2 bg-gradient-to-r from-primary via-primary/80 to-white/50 bg-clip-text text-transparent">
+                à travers la Côte d&apos;Ivoire
               </span>
             </h1>
 
-            <p className="mt-5 text-base leading-relaxed text-white/55 sm:text-lg max-w-md">
-              Une flotte premium, un service irréprochable et des tarifs
-              transparents dans toute la Côte d&apos;Ivoire.
+            <p className="mt-6 text-base leading-relaxed text-white/50 sm:text-lg max-w-md">
+              De la citadine économique au SUV de luxe, trouvez le véhicule
+              parfait. Réservation en 2&nbsp;minutes, paiement Mobile Money,
+              et c&apos;est parti.
             </p>
 
             {/* Trust badges */}
@@ -101,26 +168,27 @@ export function HeroSection() {
               {TRUST_BADGES.map((badge) => (
                 <div
                   key={badge.label}
-                  className="flex items-center gap-2 text-white/50"
+                  className="flex items-center gap-2 text-white/40"
                 >
-                  <badge.icon className="size-4 text-white/40" />
+                  <badge.icon className="size-4 text-primary/70" />
                   <span className="text-xs font-medium">{badge.label}</span>
                 </div>
               ))}
             </div>
 
-            {/* Stats row */}
+            {/* Stats */}
             <div className="mt-10 flex gap-10">
               {[
                 { value: "200+", label: "Véhicules" },
                 { value: "5", label: "Agences" },
+                { value: "5 000+", label: "Clients" },
                 { value: "98%", label: "Satisfaction" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <div className="text-2xl font-bold text-white sm:text-3xl">
                     {stat.value}
                   </div>
-                  <div className="mt-0.5 text-xs text-white/40 uppercase tracking-wider font-medium">
+                  <div className="mt-0.5 text-[10px] text-white/30 uppercase tracking-wider font-medium">
                     {stat.label}
                   </div>
                 </div>
@@ -128,104 +196,253 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right: search card with glass effect */}
+          {/* ── Right: image slideshow ── */}
           <div className="relative">
-            {/* Decorative glow behind card */}
+            {/* Glow behind card */}
             <div
               aria-hidden="true"
-              className="absolute -inset-4 rounded-3xl bg-primary/10 blur-2xl"
+              className="absolute -inset-6 rounded-3xl bg-primary/8 blur-3xl"
             />
 
-            <div className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-2xl backdrop-blur-xl sm:p-8">
-              <div className="mb-6">
-                <h2 className="text-lg font-semibold text-white">
-                  Réservez votre véhicule
-                </h2>
-                <p className="mt-1 text-sm text-white/40">
-                  En quelques clics, à partir de 15 000 FCFA/jour
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div className="flex flex-col gap-1.5">
-                    <Label className="flex items-center gap-1.5 text-xs font-medium text-white/60">
-                      <Calendar className="size-3 text-primary" />
-                      Début
-                    </Label>
-                    <Input
-                      type="date"
-                      value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
-                      className="h-11 border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-primary/50 focus:ring-primary/20"
+            <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-3 shadow-2xl backdrop-blur-sm overflow-hidden">
+              {/* Main image */}
+              <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden">
+                {HERO_SLIDES.map((v, i) => (
+                  <div
+                    key={v.id}
+                    className="absolute inset-0 transition-opacity duration-[1500ms] ease-in-out"
+                    style={{ opacity: i === currentSlide ? 1 : 0 }}
+                  >
+                    <Image
+                      src={v.image}
+                      alt={v.name}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover"
+                      priority={i === 0}
                     />
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    <Label className="flex items-center gap-1.5 text-xs font-medium text-white/60">
-                      <Calendar className="size-3 text-primary" />
-                      Fin
-                    </Label>
-                    <Input
-                      type="date"
-                      value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
-                      className="h-11 border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-primary/50 focus:ring-primary/20"
-                    />
+                ))}
+
+                {/* Bottom gradient overlay for text */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+
+                {/* Vehicle info overlay */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                  <div className="transition-all duration-500">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-primary">
+                      {currentVehicle.category}
+                    </span>
+                    <h3 className="text-lg font-bold text-white leading-tight">
+                      {currentVehicle.name}
+                    </h3>
+                  </div>
+                  <div className="text-right shrink-0 ml-4">
+                    <span className="text-xl font-bold text-white">
+                      {currentVehicle.pricePerDay.toLocaleString("fr-FR")}
+                    </span>
+                    <p className="text-[10px] text-white/50">FCFA / jour</p>
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-1.5">
-                  <Label className="flex items-center gap-1.5 text-xs font-medium text-white/60">
-                    <MapPin className="size-3 text-primary" />
-                    Agence de retrait
-                  </Label>
-                  <Select value={agency} onValueChange={setAgency}>
-                    <SelectTrigger className="h-11 border-white/10 bg-white/5 text-white [&>span]:text-white/60">
-                      <SelectValue placeholder="Choisir une agence" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {AGENCIES.map((a) => (
-                        <SelectItem key={a.value} value={a.value}>
-                          {a.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                {/* Rating badge */}
+                <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-black/40 px-2.5 py-1 backdrop-blur-sm">
+                  <Star className="size-3 text-amber-400 fill-amber-400" />
+                  <span className="text-[11px] font-semibold text-white">4.9</span>
                 </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <Label className="flex items-center gap-1.5 text-xs font-medium text-white/60">
-                    <Tag className="size-3 text-primary" />
-                    Catégorie
-                  </Label>
-                  <Select value={category} onValueChange={setCategory}>
-                    <SelectTrigger className="h-11 border-white/10 bg-white/5 text-white [&>span]:text-white/60">
-                      <SelectValue placeholder="Toutes catégories" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {CATEGORIES.map((c) => (
-                        <SelectItem key={c.value} value={c.value}>
-                          {c.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <Button
-                  size="lg"
-                  className="w-full gap-2 h-12 text-sm font-semibold mt-2"
-                  onClick={handleSearch}
-                >
-                  <Search className="size-4" />
-                  Rechercher un véhicule
-                </Button>
               </div>
 
-              <p className="mt-4 text-center text-[11px] text-white/30">
-                Paiement sécurisé par Mobile Money · Aucun frais caché
-              </p>
+              {/* Thumbnails row */}
+              <div className="flex gap-2 mt-3">
+                {HERO_SLIDES.map((v, i) => (
+                  <button
+                    key={v.id}
+                    type="button"
+                    onClick={() => setCurrentSlide(i)}
+                    className={`relative flex-1 h-14 sm:h-16 rounded-lg overflow-hidden transition-all duration-300 ${
+                      i === currentSlide
+                        ? "ring-2 ring-primary ring-offset-1 ring-offset-black/50"
+                        : "opacity-50 hover:opacity-80"
+                    }`}
+                  >
+                    <Image
+                      src={v.image}
+                      alt={v.name}
+                      fill
+                      sizes="16vw"
+                      className="object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
+          </div>
+        </div>
+
+        {/* ── Search bar at bottom ── */}
+        <div className="pb-10 sm:pb-14 lg:pb-20">
+          <div
+            aria-hidden="true"
+            className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[80%] h-32 bg-primary/8 blur-3xl rounded-full"
+          />
+
+          <div className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-4 sm:p-6 shadow-2xl backdrop-blur-xl">
+            {/* Desktop: inline row */}
+            <div className="hidden lg:flex items-end gap-3">
+              <div className="flex-1 flex flex-col gap-1.5">
+                <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
+                  <Calendar className="size-3 text-primary" />
+                  Date de début
+                </Label>
+                <Input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="h-11 border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-primary/50 focus:ring-primary/20"
+                />
+              </div>
+
+              <div className="flex-1 flex flex-col gap-1.5">
+                <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
+                  <Calendar className="size-3 text-primary" />
+                  Date de fin
+                </Label>
+                <Input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  className="h-11 border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-primary/50 focus:ring-primary/20"
+                />
+              </div>
+
+              <div className="flex-1 flex flex-col gap-1.5">
+                <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
+                  <MapPin className="size-3 text-primary" />
+                  Agence
+                </Label>
+                <Select value={agency} onValueChange={setAgency}>
+                  <SelectTrigger className="h-11 border-white/10 bg-white/5 text-white [&>span]:text-white/60">
+                    <SelectValue placeholder="Choisir une agence" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {AGENCIES.map((a) => (
+                      <SelectItem key={a.value} value={a.value}>
+                        {a.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex-1 flex flex-col gap-1.5">
+                <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
+                  <Tag className="size-3 text-primary" />
+                  Catégorie
+                </Label>
+                <Select value={category} onValueChange={setCategory}>
+                  <SelectTrigger className="h-11 border-white/10 bg-white/5 text-white [&>span]:text-white/60">
+                    <SelectValue placeholder="Toutes catégories" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {CATEGORIES.map((c) => (
+                      <SelectItem key={c.value} value={c.value}>
+                        {c.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <Button
+                size="lg"
+                className="h-11 gap-2 px-8 font-semibold shrink-0"
+                onClick={handleSearch}
+              >
+                <Search className="size-4" />
+                Rechercher
+              </Button>
+            </div>
+
+            {/* Mobile: stacked layout */}
+            <div className="lg:hidden space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col gap-1.5">
+                  <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
+                    <Calendar className="size-3 text-primary" />
+                    Début
+                  </Label>
+                  <Input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="h-11 border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-primary/50 focus:ring-primary/20"
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
+                    <Calendar className="size-3 text-primary" />
+                    Fin
+                  </Label>
+                  <Input
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="h-11 border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-primary/50 focus:ring-primary/20"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
+                  <MapPin className="size-3 text-primary" />
+                  Agence de retrait
+                </Label>
+                <Select value={agency} onValueChange={setAgency}>
+                  <SelectTrigger className="h-11 border-white/10 bg-white/5 text-white [&>span]:text-white/60">
+                    <SelectValue placeholder="Choisir une agence" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {AGENCIES.map((a) => (
+                      <SelectItem key={a.value} value={a.value}>
+                        {a.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
+                  <Tag className="size-3 text-primary" />
+                  Catégorie
+                </Label>
+                <Select value={category} onValueChange={setCategory}>
+                  <SelectTrigger className="h-11 border-white/10 bg-white/5 text-white [&>span]:text-white/60">
+                    <SelectValue placeholder="Toutes catégories" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {CATEGORIES.map((c) => (
+                      <SelectItem key={c.value} value={c.value}>
+                        {c.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <Button
+                size="lg"
+                className="w-full h-12 gap-2 font-semibold"
+                onClick={handleSearch}
+              >
+                <Search className="size-4" />
+                Rechercher un véhicule
+              </Button>
+            </div>
+
+            <p className="mt-4 text-center text-[11px] text-white/25">
+              Paiement sécurisé par Mobile Money · Aucun frais caché · Kilométrage illimité
+            </p>
           </div>
         </div>
       </div>
