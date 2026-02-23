@@ -89,7 +89,7 @@ function FeaturedCard({ category }: { category: VehicleCategory }) {
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
       </div>
 
       {/* Overlay content */}
@@ -142,7 +142,7 @@ function CompactCard({ category }: { category: VehicleCategory }) {
           sizes="(max-width: 768px) 100vw, 25vw"
           className="object-cover transition-transform duration-500 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/5" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-black/5" />
       </div>
 
       {/* Overlay content */}
@@ -185,11 +185,11 @@ function LuxuryCard({ category }: { category: VehicleCategory }) {
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
 
         {/* Premium badge */}
         <div className="absolute top-3 right-3">
-          <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-500/90 to-amber-600/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-zinc-950 backdrop-blur-sm">
+          <span className="inline-flex items-center gap-1 rounded-full bg-linear-to-r from-amber-500/90 to-amber-600/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-zinc-950 backdrop-blur-sm">
             <Crown className="size-2.5" />
             Premium
           </span>
@@ -273,7 +273,7 @@ export function VehicleCategoriesSection() {
                 Collection Prestige
               </h3>
             </div>
-            <div className="flex-1 h-px bg-gradient-to-r from-amber-500/20 to-transparent" />
+            <div className="flex-1 h-px bg-linear-to-r from-amber-500/20 to-transparent" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
