@@ -1,0 +1,288 @@
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  Car,
+  CheckCircle2,
+  Crown,
+  Fuel,
+  HelpCircle,
+  Info,
+  Shield,
+  Star,
+  Truck,
+} from "lucide-react";
+
+// ─── Constants ───────────────────────────────────────────────────────────────
+
+const CATEGORIES = [
+  {
+    name: "Citadine",
+    icon: Car,
+    priceFrom: 15000,
+    priceTo: 20000,
+    examples: "Suzuki Swift, Peugeot 208, Dacia Sandero",
+    features: ["Idéal pour la ville", "Économique en carburant", "4-5 places", "Manuelle ou auto"],
+    color: "bg-violet-500/10 text-violet-700 border-violet-200",
+  },
+  {
+    name: "Berline",
+    icon: Car,
+    priceFrom: 25000,
+    priceTo: 35000,
+    examples: "Toyota Corolla, Hyundai Elantra",
+    features: ["Confort routier", "Climatisation", "5 places", "Automatique"],
+    color: "bg-primary/10 text-primary border-primary/20",
+    popular: true,
+  },
+  {
+    name: "SUV",
+    icon: Car,
+    priceFrom: 38000,
+    priceTo: 50000,
+    examples: "Hyundai Tucson, Kia Sportage, Peugeot 3008",
+    features: ["Polyvalent", "Routes et pistes", "5 places", "Automatique"],
+    color: "bg-emerald-500/10 text-emerald-700 border-emerald-200",
+  },
+  {
+    name: "Utilitaire",
+    icon: Truck,
+    priceFrom: 22000,
+    priceTo: 35000,
+    examples: "Renault Kangoo, Toyota Hilux",
+    features: ["Transport de marchandises", "Robuste", "5 places", "Manuelle"],
+    color: "bg-amber-500/10 text-amber-700 border-amber-200",
+  },
+  {
+    name: "Luxe Berline",
+    icon: Crown,
+    priceFrom: 85000,
+    priceTo: 100000,
+    examples: "Mercedes C-Class, BMW Série 3",
+    features: ["Prestige", "Finitions haut de gamme", "Automatique", "GPS intégré"],
+    color: "bg-primary/10 text-primary border-primary/20",
+  },
+  {
+    name: "Luxe SUV",
+    icon: Crown,
+    priceFrom: 140000,
+    priceTo: 155000,
+    examples: "Toyota Land Cruiser, Porsche Cayenne",
+    features: ["Tout-terrain premium", "7 places disponibles", "Automatique", "Cuir"],
+    color: "bg-primary/10 text-primary border-primary/20",
+  },
+  {
+    name: "Luxe Sportive",
+    icon: Star,
+    priceFrom: 200000,
+    priceTo: 250000,
+    examples: "Lamborghini Urus",
+    features: ["Expérience unique", "Performances", "Automatique", "Sur réservation"],
+    color: "bg-destructive/10 text-destructive border-destructive/20",
+  },
+];
+
+const INCLUSIONS = [
+  { label: "Assurance tous risques", included: true },
+  { label: "Kilométrage illimité", included: true },
+  { label: "Assistance 24h/24", included: true },
+  { label: "Climatisation", included: true },
+  { label: "Retrait / Retour en agence", included: true },
+  { label: "Siège bébé", included: false, note: "5 000 FCFA / jour" },
+  { label: "GPS supplémentaire", included: false, note: "3 000 FCFA / jour" },
+  { label: "Chauffeur", included: false, note: "25 000 FCFA / jour" },
+  { label: "Retour inter-agences", included: false, note: "À partir de 15 000 FCFA" },
+];
+
+// ─── Main Page ───────────────────────────────────────────────────────────────
+
+export default function TarifsPage() {
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="h-1 w-full bg-primary" aria-hidden="true" />
+
+      <main className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Page header */}
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
+            Nos Tarifs
+          </h1>
+          <p className="mt-3 text-muted-foreground">
+            Des tarifs clairs et compétitifs pour toutes vos envies de mobilité.
+            Assurance tous risques et kilométrage illimité inclus.
+          </p>
+        </div>
+
+        {/* Price grid */}
+        <section className="mb-16">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {CATEGORIES.map((cat) => (
+              <Card
+                key={cat.name}
+                className={`gap-0 py-0 relative ${
+                  cat.popular ? "ring-2 ring-primary" : ""
+                }`}
+              >
+                {cat.popular && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <Badge className="bg-primary text-primary-foreground text-xs">
+                      Populaire
+                    </Badge>
+                  </div>
+                )}
+                <CardHeader className="px-5 pt-6 pb-3 text-center">
+                  <div className="flex size-12 items-center justify-center rounded-xl bg-primary/10 mx-auto mb-3">
+                    <cat.icon className="size-6 text-primary" />
+                  </div>
+                  <CardTitle className="text-base">{cat.name}</CardTitle>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {cat.examples}
+                  </p>
+                </CardHeader>
+                <CardContent className="px-5 pb-5 space-y-4">
+                  <div className="text-center">
+                    <div className="flex items-baseline justify-center gap-1">
+                      <span className="text-2xl font-bold text-primary">
+                        {cat.priceFrom.toLocaleString("fr-FR")}
+                      </span>
+                      {cat.priceTo > cat.priceFrom && (
+                        <>
+                          <span className="text-muted-foreground"> - </span>
+                          <span className="text-2xl font-bold text-primary">
+                            {cat.priceTo.toLocaleString("fr-FR")}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground">FCFA / jour</p>
+                  </div>
+
+                  <Separator />
+
+                  <ul className="space-y-2">
+                    {cat.features.map((feature) => (
+                      <li
+                        key={feature}
+                        className="flex items-center gap-2 text-sm text-muted-foreground"
+                      >
+                        <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button className="w-full" size="sm" asChild>
+                    <Link href="/vehicules">Voir les véhicules</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* What's included */}
+        <section className="mb-16">
+          <h2 className="text-2xl font-bold text-foreground text-center mb-8">
+            Ce qui est inclus
+          </h2>
+          <Card className="gap-0 py-0 max-w-2xl mx-auto">
+            <CardContent className="p-6">
+              <div className="space-y-3">
+                {INCLUSIONS.map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center justify-between py-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      {item.included ? (
+                        <CheckCircle2 className="size-4 text-emerald-500" />
+                      ) : (
+                        <Info className="size-4 text-amber-500" />
+                      )}
+                      <span className="text-sm text-foreground">
+                        {item.label}
+                      </span>
+                    </div>
+                    {item.included ? (
+                      <Badge
+                        variant="outline"
+                        className="bg-emerald-500/10 text-emerald-700 border-emerald-200"
+                      >
+                        Inclus
+                      </Badge>
+                    ) : (
+                      <span className="text-sm text-muted-foreground">
+                        {item.note}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* Important notes */}
+        <section className="mb-16 max-w-2xl mx-auto">
+          <h2 className="text-2xl font-bold text-foreground text-center mb-8">
+            Bon à savoir
+          </h2>
+          <div className="space-y-4">
+            {[
+              {
+                q: "Conditions de location",
+                a: "Âge minimum 21 ans, permis de conduire valide depuis au moins 2 ans, pièce d'identité en cours de validité.",
+              },
+              {
+                q: "Caution",
+                a: "Une caution de 100 000 à 500 000 FCFA (selon la catégorie) est requise au retrait du véhicule. Elle est restituée intégralement au retour.",
+              },
+              {
+                q: "Annulation",
+                a: "Annulation gratuite jusqu'à 48h avant le début de la location. Au-delà, des frais de 25% du montant total s'appliquent.",
+              },
+              {
+                q: "Réductions",
+                a: "Tarifs dégressifs : -10% pour 7+ jours, -15% pour 14+ jours, -20% pour 30+ jours. Tarifs entreprises sur devis.",
+              },
+            ].map((item) => (
+              <div
+                key={item.q}
+                className="rounded-xl border bg-card p-5 space-y-2"
+              >
+                <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                  <HelpCircle className="size-4 text-primary" />
+                  {item.q}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed pl-6">
+                  {item.a}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <div className="rounded-2xl bg-primary/5 border border-primary/10 p-8 sm:p-12 text-center">
+          <h2 className="text-2xl font-bold text-foreground">
+            Prêt à réserver ?
+          </h2>
+          <p className="mt-2 text-muted-foreground max-w-md mx-auto">
+            Choisissez votre véhicule et réservez en quelques clics. Paiement
+            sécurisé par Mobile Money.
+          </p>
+          <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+            <Button size="lg" className="font-semibold" asChild>
+              <Link href="/reservation">Réserver maintenant</Link>
+            </Button>
+            <Button variant="outline" size="lg" asChild>
+              <Link href="/contact">Demander un devis</Link>
+            </Button>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}

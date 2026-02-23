@@ -1,0 +1,103 @@
+import { Separator } from "@/components/ui/separator";
+
+const SECTIONS = [
+  {
+    title: "1. Collecte des données",
+    content:
+      "AutoLoc CI collecte les données personnelles suivantes dans le cadre de ses services de location de véhicules : nom et prénom, numéro de téléphone, adresse email (optionnel), numéro de permis de conduire, informations de paiement Mobile Money. Ces données sont collectées lors de l'inscription sur la plateforme et lors de chaque réservation.",
+  },
+  {
+    title: "2. Finalités du traitement",
+    content:
+      "Les données collectées sont utilisées pour : la gestion des réservations et de la facturation, la communication avec le Client (confirmations, rappels, suivi), l'amélioration de nos services et de l'expérience utilisateur, le respect de nos obligations légales et réglementaires, l'envoi de notifications relatives aux réservations en cours.",
+  },
+  {
+    title: "3. Base légale du traitement",
+    content:
+      "Le traitement des données personnelles est fondé sur : l'exécution du contrat de location (gestion des réservations), le consentement du Client (communications commerciales), les obligations légales d'AutoLoc CI (facturation, comptabilité), l'intérêt légitime d'AutoLoc CI (amélioration des services, sécurité).",
+  },
+  {
+    title: "4. Durée de conservation",
+    content:
+      "Les données personnelles sont conservées pendant la durée de la relation commerciale avec le Client, augmentée d'une période de 3 ans après la dernière interaction. Les données de facturation sont conservées pendant 10 ans conformément aux obligations comptables ivoiriennes. Les données de paiement ne sont pas stockées par AutoLoc CI mais par notre prestataire de paiement.",
+  },
+  {
+    title: "5. Partage des données",
+    content:
+      "AutoLoc CI ne vend ni ne loue les données personnelles de ses Clients à des tiers. Les données peuvent être partagées avec : notre prestataire de paiement Mobile Money (pour le traitement des transactions), les autorités compétentes (en cas d'obligation légale), nos sous-traitants techniques (hébergement, maintenance) soumis à des obligations de confidentialité strictes.",
+  },
+  {
+    title: "6. Sécurité des données",
+    content:
+      "AutoLoc CI met en œuvre les mesures techniques et organisationnelles appropriées pour protéger les données personnelles contre tout accès non autorisé, modification, divulgation ou destruction. Les données sont chiffrées en transit (HTTPS) et au repos. L'accès aux données est limité au personnel autorisé.",
+  },
+  {
+    title: "7. Droits des utilisateurs",
+    content:
+      "Conformément à la loi ivoirienne n°2013-450 relative à la protection des données à caractère personnel, vous disposez des droits suivants : droit d'accès à vos données personnelles, droit de rectification des données inexactes, droit de suppression de vos données (dans les limites légales), droit d'opposition au traitement de vos données. Pour exercer ces droits, contactez-nous à : confidentialite@autoloc-ci.com",
+  },
+  {
+    title: "8. Cookies",
+    content:
+      "Notre site utilise des cookies techniques essentiels au fonctionnement de la plateforme (authentification, préférences). Des cookies d'analyse anonymes peuvent être utilisés pour comprendre l'utilisation du site. Vous pouvez gérer vos préférences de cookies via les paramètres de votre navigateur.",
+  },
+  {
+    title: "9. Modifications",
+    content:
+      "AutoLoc CI se réserve le droit de modifier la présente politique de confidentialité à tout moment. Les modifications entrent en vigueur dès leur publication sur le site. Les utilisateurs seront informés par notification sur la plateforme en cas de modification substantielle.",
+  },
+  {
+    title: "10. Contact",
+    content:
+      "Pour toute question relative à la protection de vos données personnelles, vous pouvez nous contacter : par email à confidentialite@autoloc-ci.com, par téléphone au +225 27 00 00 00, par courrier : AutoLoc CI — Service Protection des Données, Rue des Jardins, Plateau, Abidjan, Côte d'Ivoire.",
+  },
+];
+
+export default function ConfidentialitePage() {
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="h-1 w-full bg-primary" aria-hidden="true" />
+
+      <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-foreground">
+            Politique de Confidentialité
+          </h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Dernière mise à jour : 1er janvier 2026
+          </p>
+        </div>
+
+        <div className="rounded-xl border bg-primary/5 border-primary/10 p-4 mb-8">
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Chez AutoLoc CI, la protection de vos données personnelles est une
+            priorité. Cette politique décrit comment nous collectons, utilisons
+            et protégeons vos informations conformément à la législation
+            ivoirienne en vigueur.
+          </p>
+        </div>
+
+        <div className="space-y-8">
+          {SECTIONS.map((section) => (
+            <section key={section.title}>
+              <h2 className="text-lg font-semibold text-foreground mb-3">
+                {section.title}
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {section.content}
+              </p>
+            </section>
+          ))}
+        </div>
+
+        <Separator className="my-10" />
+
+        <p className="text-xs text-muted-foreground text-center">
+          AutoLoc CI — Service Protection des Données
+          <br />
+          confidentialite@autoloc-ci.com | +225 27 00 00 00
+        </p>
+      </main>
+    </div>
+  );
+}

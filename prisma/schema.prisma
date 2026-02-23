@@ -1,0 +1,200 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// UTILISATEURS
+// ============================================
+
+enum UserRole {
+  CLIENT
+  ADMIN
+  SUPER_ADMIN
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  phone         String    @unique
+  password      String
+  firstName     String
+  lastName      String
+  role          UserRole  @default(CLIENT)
+  isActive      Boolean   @default(true)
+  emailVerified Boolean   @default(false)
+  phoneVerified Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  reservations Reservation[]
+
+  @@map("users")
+}
+
+// ============================================
+// AGENCES
+// ============================================
+
+model Agency {
+  id          String   @id @default(cuid())
+  name        String
+  city        String
+  address     String
+  phone       String
+  email       String?
+  latitude    Float?
+  longitude   Float?
+  openingTime String   @default("08:00")
+  closingTime String   @default("18:00")
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  vehicles           Vehicle[]
+  reservationsPickup Reservation[] @relation("PickupAgency")
+  reservationsReturn Reservation[] @relation("ReturnAgency")
+
+  @@map("agencies")
+}
+
+// ============================================
+// VEHICULES
+// ============================================
+
+enum VehicleCategory {
+  CITADINE
+  BERLINE
+  SUV
+  UTILITAIRE
+  LUXE_BERLINE
+  LUXE_SUV
+  LUXE_SPORTIVE
+}
+
+enum FuelType {
+  ESSENCE
+  DIESEL
+  HYBRIDE
+  ELECTRIQUE
+}
+
+enum TransmissionType {
+  MANUELLE
+  AUTOMATIQUE
+}
+
+enum VehicleStatus {
+  DISPONIBLE
+  EN_LOCATION
+  EN_MAINTENANCE
+  HORS_SERVICE
+}
+
+model Vehicle {
+  id            String           @id @default(cuid())
+  brand         String
+  model         String
+  year          Int
+  category      VehicleCategory
+  fuel          FuelType
+  transmission  TransmissionType
+  seats         Int              @default(5)
+  pricePerDay   Int              // en FCFA
+  images        String[]         // URLs des images
+  description   String?
+  licensePlate  String           @unique
+  mileage       Int              @default(0)
+  status        VehicleStatus    @default(DISPONIBLE)
+  features      String[]         // GPS, Climatisation, Bluetooth, etc.
+  isLuxury      Boolean          @default(false)
+  agencyId      String
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  agency       Agency        @relation(fields: [agencyId], references: [id])
+  reservations Reservation[]
+
+  @@map("vehicles")
+}
+
+// ============================================
+// RESERVATIONS
+// ============================================
+
+enum ReservationStatus {
+  EN_ATTENTE
+  CONFIRMEE
+  EN_COURS
+  TERMINEE
+  ANNULEE
+}
+
+model Reservation {
+  id              String            @id @default(cuid())
+  userId          String
+  vehicleId       String
+  pickupAgencyId  String
+  returnAgencyId  String
+  startDate       DateTime
+  endDate         DateTime
+  totalDays       Int
+  dailyRate       Int               // prix/jour au moment de la réservation (FCFA)
+  totalAmount     Int               // montant total (FCFA)
+  status          ReservationStatus @default(EN_ATTENTE)
+  options         String[]          // GPS, Siège bébé, Assurance premium, Chauffeur
+  notes           String?
+  cancelledAt     DateTime?
+  cancelReason    String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  user          User     @relation(fields: [userId], references: [id])
+  vehicle       Vehicle  @relation(fields: [vehicleId], references: [id])
+  pickupAgency  Agency   @relation("PickupAgency", fields: [pickupAgencyId], references: [id])
+  returnAgency  Agency   @relation("ReturnAgency", fields: [returnAgencyId], references: [id])
+  payment       Payment?
+
+  @@map("reservations")
+}
+
+// ============================================
+// PAIEMENTS
+// ============================================
+
+enum PaymentStatus {
+  EN_ATTENTE
+  REUSSI
+  ECHOUE
+  REMBOURSE
+}
+
+enum PaymentMethod {
+  ORANGE_MONEY
+  MTN_MOMO
+  MOOV_MONEY
+  WAVE
+  CARTE_BANCAIRE
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  reservationId   String        @unique
+  amount          Int           // en FCFA
+  method          PaymentMethod
+  status          PaymentStatus @default(EN_ATTENTE)
+  transactionRef  String?       @unique
+  phoneNumber     String?       // numéro utilisé pour le paiement Mobile Money
+  paidAt          DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  reservation Reservation @relation(fields: [reservationId], references: [id])
+
+  @@map("payments")
+}
