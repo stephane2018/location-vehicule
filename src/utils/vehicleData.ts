@@ -12,6 +12,7 @@ export type VehicleCategory =
 
 export type Transmission = "Automatique" | "Manuelle";
 export type Carburant = "Essence" | "Diesel";
+export type VehicleStatus = "disponible" | "en-location" | "en-revision";
 
 export interface Vehicle {
   id: string;
@@ -28,6 +29,8 @@ export interface Vehicle {
   gradientTo: string;
   popular?: boolean;
   addedAt: string; // ISO date string for "Récents" sort
+  status: VehicleStatus;
+  availableDate?: string; // ISO date — next availability when status is "en-location"
 }
 
 export const AGENCIES = [
@@ -55,6 +58,8 @@ export const VEHICLES: Vehicle[] = [
     gradientTo: "#3b82f6",
     popular: true,
     addedAt: "2025-11-15",
+    status: "en-location",
+    availableDate: "2026-03-05",
   },
   {
     id: "v2",
@@ -70,6 +75,7 @@ export const VEHICLES: Vehicle[] = [
     gradientTo: "#334155",
     popular: true,
     addedAt: "2025-12-01",
+    status: "disponible",
   },
   {
     id: "v3",
@@ -85,6 +91,7 @@ export const VEHICLES: Vehicle[] = [
     gradientTo: "#f87171",
     popular: false,
     addedAt: "2025-10-20",
+    status: "disponible",
   },
   {
     id: "v4",
@@ -100,6 +107,8 @@ export const VEHICLES: Vehicle[] = [
     gradientTo: "#4a4a6a",
     popular: true,
     addedAt: "2025-12-10",
+    status: "en-location",
+    availableDate: "2026-03-12",
   },
   {
     id: "v5",
@@ -115,6 +124,7 @@ export const VEHICLES: Vehicle[] = [
     gradientTo: "#10b981",
     popular: true,
     addedAt: "2025-12-20",
+    status: "disponible",
   },
   {
     id: "v6",
@@ -130,6 +140,7 @@ export const VEHICLES: Vehicle[] = [
     gradientTo: "#f59e0b",
     popular: false,
     addedAt: "2025-09-05",
+    status: "en-revision",
   },
   {
     id: "v7",
@@ -145,6 +156,7 @@ export const VEHICLES: Vehicle[] = [
     gradientTo: "#2563eb",
     popular: false,
     addedAt: "2026-01-05",
+    status: "disponible",
   },
   {
     id: "v8",
@@ -160,6 +172,8 @@ export const VEHICLES: Vehicle[] = [
     gradientTo: "#7c3aed",
     popular: false,
     addedAt: "2025-11-28",
+    status: "en-location",
+    availableDate: "2026-02-28",
   },
   {
     id: "v9",
@@ -175,6 +189,7 @@ export const VEHICLES: Vehicle[] = [
     gradientTo: "#0ea5e9",
     popular: false,
     addedAt: "2025-08-14",
+    status: "disponible",
   },
   {
     id: "v10",
@@ -190,6 +205,7 @@ export const VEHICLES: Vehicle[] = [
     gradientTo: "#ef4444",
     popular: true,
     addedAt: "2026-01-20",
+    status: "disponible",
   },
   {
     id: "v11",
@@ -205,6 +221,7 @@ export const VEHICLES: Vehicle[] = [
     gradientTo: "#d97706",
     popular: false,
     addedAt: "2025-07-30",
+    status: "en-revision",
   },
   {
     id: "v12",
@@ -220,6 +237,7 @@ export const VEHICLES: Vehicle[] = [
     gradientTo: "#f59e0b",
     popular: true,
     addedAt: "2026-02-01",
+    status: "disponible",
   },
 ];
 

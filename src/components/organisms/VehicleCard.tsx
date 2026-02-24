@@ -4,24 +4,86 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { type Vehicle } from "@/utils/vehicleData";
+import { type Vehicle, type VehicleStatus } from "@/utils/vehicleData";
 import {
   ArrowRight,
   Building2,
+  CalendarClock,
+  CircleCheck,
   Fuel,
   Settings2,
   Star,
   Users,
+  Wrench,
 } from "lucide-react";
+
+// ─── Status config ───────────────────────────────────────────────────────────
+
+const STATUS_CONFIG: Record<
+  VehicleStatus,
+  { label: string; icon: React.ElementType; className: string }
+> = {
+  disponible: {
+    label: "Disponible",
+    icon: CircleCheck,
+    className:
+      "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/20",
+  },
+  "en-location": {
+    label: "En location",
+    icon: CalendarClock,
+    className:
+      "bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/20",
+  },
+  "en-revision": {
+    label: "En révision",
+    icon: Wrench,
+    className:
+      "bg-red-500/15 text-red-700 dark:text-red-400 border-red-500/20",
+  },
+};
+
+function formatAvailableDate(dateStr: string): string {
+  return new Date(dateStr).toLocaleDateString("fr-FR", {
+    day: "numeric",
+    month: "short",
+  });
+}
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
 
-function SpecPill({ icon: Icon, label }: { icon: React.ElementType; label: string }) {
+function SpecPill({
+  icon: Icon,
+  label,
+}: {
+  icon: React.ElementType;
+  label: string;
+}) {
   return (
     <div className="flex items-center gap-1.5 rounded-full bg-muted/60 px-2.5 py-1 text-[11px] text-muted-foreground">
       <Icon className="size-3 shrink-0" />
       <span>{label}</span>
+    </div>
+  );
+}
+
+function StatusBadge({ vehicle }: { vehicle: Vehicle }) {
+  const config = STATUS_CONFIG[vehicle.status];
+  const Icon = config.icon;
+
+  return (
+    <div className="flex flex-col items-start gap-1">
+      <div
+        className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${config.className}`}
+      >
+        <Icon className="size-3 shrink-0" />
+        <span>{config.label}</span>
+      </div>
+      {vehicle.status === "en-location" && vehicle.availableDate && (
+        <span className="text-[10px] text-muted-foreground ml-1">
+          Libre le {formatAvailableDate(vehicle.availableDate)}
+        </span>
+      )}
     </div>
   );
 }
@@ -52,7 +114,10 @@ export default function VehicleCard({
     gradientFrom,
     gradientTo,
     popular,
+    status,
   } = vehicle;
+
+  const isUnavailable = status !== "disponible";
 
   const agencyLabel =
     agencies.length === 1
@@ -62,7 +127,11 @@ export default function VehicleCard({
       : `${agencies[0]} · ${agencies[1]} +${agencies.length - 2}`;
 
   return (
-    <Card className="group overflow-hidden border-border/50 p-0 gap-0 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-0.5 hover:border-primary/15">
+    <Card
+      className={`group overflow-hidden border-border/50 p-0 gap-0 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-0.5 hover:border-primary/15 ${
+        isUnavailable ? "opacity-80" : ""
+      }`}
+    >
       {/* ── Image ── */}
       <div className="relative">
         <div
@@ -76,8 +145,15 @@ export default function VehicleCard({
             alt={name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`object-cover transition-transform duration-500 group-hover:scale-105 ${
+              isUnavailable ? "grayscale-[30%]" : ""
+            }`}
           />
+
+          {/* Unavailable overlay */}
+          {isUnavailable && (
+            <div className="absolute inset-0 bg-black/10" />
+          )}
         </div>
 
         {/* Overlay badges */}
@@ -118,6 +194,9 @@ export default function VehicleCard({
           </div>
         </div>
 
+        {/* Status */}
+        <StatusBadge vehicle={vehicle} />
+
         {/* Specs */}
         <div className="flex flex-wrap gap-1.5" aria-label="Caractéristiques">
           <SpecPill icon={Settings2} label={transmission} />
@@ -150,11 +229,15 @@ export default function VehicleCard({
           size="sm"
           className="flex-1 text-xs"
           onClick={() => onReserve?.(id)}
+          disabled={isUnavailable}
           aria-label={`Réserver ${name}`}
         >
-          Réserver
+          {isUnavailable ? "Indisponible" : "Réserver"}
         </Button>
       </CardFooter>
     </Card>
   );
 }
+
+// Re-use Card imports at component level
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
