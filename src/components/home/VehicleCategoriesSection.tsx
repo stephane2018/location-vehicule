@@ -69,7 +69,7 @@ export function VehicleCategoriesSection() {
       aria-labelledby="categories-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
+
         <div className="mb-14 max-w-2xl">
           <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">
             Notre flotte
