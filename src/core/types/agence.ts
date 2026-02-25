@@ -8,4 +8,6 @@ export interface Agence {
   nombreVehicules: number;
   vehiculesDisponibles: number;
   statut: "active" | "inactive";
+  image: string;
+  description: string;
 }

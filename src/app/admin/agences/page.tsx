@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import {
   MapPin,
   Phone,
@@ -171,9 +172,12 @@ function AgenceCard({ agence }: { agence: Agence }) {
           size="sm"
           className="flex-1 gap-1.5"
           aria-label={`Voir les véhicules de ${agence.nom}`}
+          asChild
         >
-          <Eye className="size-3.5" />
-          Voir véhicules
+          <Link href={`/admin/agences/${agence.id}`}>
+            <Eye className="size-3.5" />
+            Voir véhicules
+          </Link>
         </Button>
       </CardFooter>
     </Card>
@@ -240,12 +244,11 @@ export default function AgencesPage() {
         <AddAgenceModal />
       </div>
 
-      {/* Summary stats */}
       <AgencesSummary agences={AGENCES_MOCK} />
 
       {/* Agency grid */}
       <section aria-label="Liste des agences">
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           {AGENCES_MOCK.map((agence) => (
             <AgenceCard key={agence.id} agence={agence} />
           ))}
