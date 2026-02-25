@@ -126,7 +126,6 @@ function FeaturedCard({ category }: { category: VehicleCategory }) {
   );
 }
 
-/** Compact card for secondary standard categories */
 function CompactCard({ category }: { category: VehicleCategory }) {
   return (
     <Link
