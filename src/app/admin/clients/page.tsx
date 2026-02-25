@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import {
   Users,
   UserCheck,
@@ -259,8 +260,11 @@ export default function ClientsPage() {
                         size="icon"
                         className="size-8 text-muted-foreground hover:text-primary"
                         aria-label={`Voir le profil de ${client.prenom} ${client.nom}`}
+                        asChild
                       >
-                        <Eye className="size-3.5" />
+                        <Link href={`/admin/clients/${client.id}`}>
+                          <Eye className="size-3.5" />
+                        </Link>
                       </Button>
                     </TableCell>
                   </TableRow>

@@ -1,4 +1,4 @@
-import React from "react";
+import Link from "next/link";
 import {
   CalendarCheck,
   CheckCircle2,
@@ -285,8 +285,11 @@ export default function ReservationsPage() {
                         size="icon"
                         className="size-8 text-muted-foreground hover:text-primary"
                         aria-label={`Voir la réservation ${res.id}`}
+                        asChild
                       >
-                        <Eye className="size-3.5" />
+                        <Link href={`/admin/reservations/${res.id}`}>
+                          <Eye className="size-3.5" />
+                        </Link>
                       </Button>
                     </TableCell>
                   </TableRow>
