@@ -9,6 +9,8 @@ import {
   Building2,
   BarChart3,
   ArrowRight,
+  Wallet,
+  Wrench,
 } from "lucide-react";
 
 import {
@@ -211,6 +213,18 @@ const QUICK_ACTIONS = [
     description: "Créer une agence de location",
     icon: Building2,
     href: "/admin/agences",
+  },
+  {
+    label: "Suivi financier",
+    description: "Revenus, rentabilité et documents",
+    icon: Wallet,
+    href: "/admin/finances",
+  },
+  {
+    label: "Garage & Maintenance",
+    description: "Interventions et suivi du parc",
+    icon: Wrench,
+    href: "/admin/garage",
   },
   {
     label: "Voir les rapports",

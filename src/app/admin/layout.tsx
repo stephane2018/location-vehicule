@@ -18,6 +18,9 @@ import {
   LogOut,
   UserCircle,
   Shield,
+  Wallet,
+  Activity,
+  Wrench,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -52,6 +55,9 @@ const NAV_ITEMS = [
   { href: "/admin/agences", label: "Agences", icon: Building2 },
   { href: "/admin/reservations", label: "Réservations", icon: CalendarCheck },
   { href: "/admin/clients", label: "Clients", icon: Users },
+  { href: "/admin/finances", label: "Finances", icon: Wallet },
+  { href: "/admin/exploitation", label: "Exploitation", icon: Activity },
+  { href: "/admin/garage", label: "Garage", icon: Wrench },
   { href: "/admin/rapports", label: "Rapports", icon: BarChart3 },
   { href: "/admin/parametres", label: "Paramètres", icon: Settings },
 ] as const;
@@ -60,15 +66,46 @@ const NAV_ITEMS = [
 // Helper: breadcrumb label derived from pathname
 // ---------------------------------------------------------------------------
 
+const ROUTE_LABELS: Record<string, string> = {
+  documents: "Documents",
+  interventions: "Interventions",
+  vehicules: "Véhicules",
+  inspection: "Inspection",
+};
+
 function getBreadcrumb(pathname: string): { label: string; href: string }[] {
-  const found = NAV_ITEMS.find((item) => item.href === pathname);
-  if (!found || pathname === "/admin") {
+  if (pathname === "/admin") {
     return [{ label: "Tableau de bord", href: "/admin" }];
   }
-  return [
+
+  const crumbs: { label: string; href: string }[] = [
     { label: "Tableau de bord", href: "/admin" },
-    { label: found.label, href: found.href },
   ];
+
+  // Find the matching top-level nav item (prefix match, excluding /admin exact)
+  const found = NAV_ITEMS.find(
+    (item) => item.href !== "/admin" && pathname.startsWith(item.href)
+  );
+
+  if (!found) {
+    return crumbs;
+  }
+
+  crumbs.push({ label: found.label, href: found.href });
+
+  // Handle sub-routes (e.g. /admin/finances/documents or /admin/reservations/RES-001/inspection)
+  const rest = pathname.slice(found.href.length).replace(/^\//, "");
+  if (rest) {
+    const segments = rest.split("/");
+    let currentPath = found.href;
+    for (const segment of segments) {
+      currentPath += "/" + segment;
+      const label = ROUTE_LABELS[segment] || segment;
+      crumbs.push({ label, href: currentPath });
+    }
+  }
+
+  return crumbs;
 }
 
 // ---------------------------------------------------------------------------
@@ -138,7 +175,11 @@ function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
             href={item.href}
             label={item.label}
             icon={item.icon}
-            active={pathname === item.href}
+            active={
+              item.href === "/admin"
+                ? pathname === "/admin"
+                : pathname.startsWith(item.href)
+            }
             onClick={onNavClick}
           />
         ))}
