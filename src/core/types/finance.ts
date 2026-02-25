@@ -1,5 +1,5 @@
-export type DocumentType = "pro_forma" | "facture" | "facture_reparation";
-export type DocumentStatut = "brouillon" | "envoyee" | "payee" | "annulee";
+export type FinanceDocumentType = "pro_forma" | "facture" | "facture_reparation";
+export type FinanceDocumentStatut = "brouillon" | "envoyee" | "payee" | "annulee";
 
 export interface ClientInfo {
   nom: string;
@@ -22,8 +22,8 @@ export interface LigneDocument {
 
 export interface DocumentFinancier {
   id: string;
-  type: DocumentType;
-  statut: DocumentStatut;
+  type: FinanceDocumentType;
+  statut: FinanceDocumentStatut;
   numero: string;
   dateCreation: string;
   dateEcheance?: string;
