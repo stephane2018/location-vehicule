@@ -10,15 +10,15 @@ import {
   FileText,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+} from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { Separator } from "@/shared/components/ui/separator";
 import {
   Table,
   TableBody,
@@ -27,11 +27,11 @@ import {
   TableHeader,
   TableRow,
   TableFooter,
-} from "@/components/ui/table";
+} from "@/shared/components/ui/table";
 
-import { DOCUMENTS } from "@/data/mock/documents";
-import { formatMontant, formatDate } from "@/utils/adminHelpers";
-import type { DocumentType, DocumentStatut } from "@/types/admin";
+import { DOCUMENTS } from "@/core/data/mock/documents";
+import { formatMontant, formatDate } from "@/core/utils/adminHelpers";
+import type { DocumentType, DocumentStatut } from "@/core/types/admin";
 
 // ---------------------------------------------------------------------------
 // Helpers

@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Plus,
   MapPin,
   Phone,
   Car,
@@ -17,88 +16,22 @@ import {
   CardTitle,
   CardDescription,
   CardFooter,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+} from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { Button } from "@/shared/components/ui/button";
+import { Separator } from "@/shared/components/ui/separator";
+import { AddAgenceModal } from "./AddAgenceModal";
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
-interface Agence {
-  id: string;
-  nom: string;
-  ville: string;
-  adresse: string;
-  telephone: string;
-  responsable: string;
-  nombreVehicules: number;
-  vehiculesDisponibles: number;
-  statut: "active" | "inactive";
-}
+import type { Agence } from "@/core/types/agence";
+import { AGENCES_MOCK } from "@/core/data/mock/agences";
 
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
-
-const AGENCES_MOCK: Agence[] = [
-  {
-    id: "AGC-001",
-    nom: "AutoLoc Cocody",
-    ville: "Abidjan",
-    adresse: "Rue des Jardins, Cocody, Abidjan",
-    telephone: "+225 07 11 22 33 44",
-    responsable: "Kouadio Jean-Baptiste",
-    nombreVehicules: 15,
-    vehiculesDisponibles: 8,
-    statut: "active",
-  },
-  {
-    id: "AGC-002",
-    nom: "AutoLoc Plateau",
-    ville: "Abidjan",
-    adresse: "Avenue Houphouët-Boigny, Plateau, Abidjan",
-    telephone: "+225 07 55 66 77 88",
-    responsable: "Traoré Aminata",
-    nombreVehicules: 12,
-    vehiculesDisponibles: 5,
-    statut: "active",
-  },
-  {
-    id: "AGC-003",
-    nom: "AutoLoc Yamoussoukro",
-    ville: "Yamoussoukro",
-    adresse: "Boulevard de la Paix, Yamoussoukro",
-    telephone: "+225 07 22 33 44 55",
-    responsable: "Koné Mamadou",
-    nombreVehicules: 8,
-    vehiculesDisponibles: 4,
-    statut: "active",
-  },
-  {
-    id: "AGC-004",
-    nom: "AutoLoc Bouaké",
-    ville: "Bouaké",
-    adresse: "Quartier Commerce, Avenue du Général de Gaulle, Bouaké",
-    telephone: "+225 07 44 55 66 77",
-    responsable: "Diallo Fatoumata",
-    nombreVehicules: 6,
-    vehiculesDisponibles: 3,
-    statut: "active",
-  },
-  {
-    id: "AGC-005",
-    nom: "AutoLoc San Pedro",
-    ville: "San Pedro",
-    adresse: "Zone Industrielle, San Pedro",
-    telephone: "+225 07 88 99 00 11",
-    responsable: "Yao François",
-    nombreVehicules: 4,
-    vehiculesDisponibles: 3,
-    statut: "active",
-  },
-];
 
 // Occupation ratio thresholds for color coding
 function getOccupationVariant(
@@ -304,10 +237,7 @@ export default function AgencesPage() {
             Gérez les agences de location AutoLoc CI à travers la Côte d&apos;Ivoire.
           </p>
         </div>
-        <Button className="gap-2 self-start sm:self-auto">
-          <Plus className="size-4" />
-          Ajouter une agence
-        </Button>
+        <AddAgenceModal />
       </div>
 
       {/* Summary stats */}

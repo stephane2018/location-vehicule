@@ -4,10 +4,10 @@ import * as React from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { VEHICLES, type Vehicle } from "@/utils/vehicleData";
-import VehicleCard from "@/components/organisms/VehicleCard";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { VEHICLES, type Vehicle } from "@/core/utils/vehicleData";
+import VehicleCard from "@/shared/components/Layout/VehicleCard";
+import { Button } from "@/shared/components/ui/button";
+import { Badge } from "@/shared/components/ui/badge";
 import {
   ArrowLeft,
   ArrowRight,
@@ -252,7 +252,7 @@ function VehicleImageGallery({ vehicle }: { vehicle: Vehicle }) {
 function VehicleNotFound() {
   return (
     <div className="min-h-screen bg-background">
-      <main className="mx-auto max-w-screen-xl px-4 py-20 sm:px-6 lg:px-8 text-center">
+      <main className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 text-center">
         <div className="flex flex-col items-center gap-5">
           <div className="flex size-20 items-center justify-center rounded-2xl bg-muted/60">
             <ArrowLeft className="size-8 text-muted-foreground/40" />
@@ -296,7 +296,7 @@ export default function VehicleDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="mx-auto max-w-screen-xl px-4 pt-6 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
         {/* ── Breadcrumb ── */}
         <div className="mb-6">
           <Link

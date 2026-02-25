@@ -16,10 +16,10 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+} from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
 import {
   Table,
   TableBody,
@@ -27,25 +27,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+} from "@/shared/components/ui/table";
+import { Avatar, AvatarFallback } from "@/shared/components/ui/avatar";
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
-interface Client {
-  id: string;
-  nom: string;
-  prenom: string;
-  telephone: string;
-  email: string;
-  ville: string;
-  inscriptionDate: string;
-  nombreReservations: number;
-  totalDepense: number;
-  statut: "actif" | "inactif" | "nouveau";
-}
+import type { Client } from "@/core/types/client";
+import { CLIENTS_MOCK } from "@/core/data/mock/clients";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -99,129 +89,6 @@ const STATUT_CONFIG: Record<
     className: "bg-primary/10 text-primary border-primary/20",
   },
 };
-
-const CLIENTS_MOCK: Client[] = [
-  {
-    id: "CLI-001",
-    nom: "Kouamé",
-    prenom: "Yves",
-    telephone: "+225 07 12 34 56 78",
-    email: "yves.kouame@email.com",
-    ville: "Abidjan",
-    inscriptionDate: "15 jan. 2025",
-    nombreReservations: 8,
-    totalDepense: 2450000,
-    statut: "actif",
-  },
-  {
-    id: "CLI-002",
-    nom: "Adjoua",
-    prenom: "Mariam",
-    telephone: "+225 07 98 76 54 32",
-    email: "mariam.adjoua@email.com",
-    ville: "Abidjan",
-    inscriptionDate: "3 mar. 2025",
-    nombreReservations: 5,
-    totalDepense: 1200000,
-    statut: "actif",
-  },
-  {
-    id: "CLI-003",
-    nom: "Bamba",
-    prenom: "Cheick",
-    telephone: "+225 07 11 22 33 44",
-    email: "cheick.bamba@email.com",
-    ville: "Yamoussoukro",
-    inscriptionDate: "20 juil. 2025",
-    nombreReservations: 3,
-    totalDepense: 890000,
-    statut: "actif",
-  },
-  {
-    id: "CLI-004",
-    nom: "Touré",
-    prenom: "Fatoumata",
-    telephone: "+225 07 55 66 77 88",
-    email: "fatoumata.toure@email.com",
-    ville: "Bouaké",
-    inscriptionDate: "8 sep. 2025",
-    nombreReservations: 1,
-    totalDepense: 160000,
-    statut: "inactif",
-  },
-  {
-    id: "CLI-005",
-    nom: "N'Goran",
-    prenom: "Pierre",
-    telephone: "+225 07 44 33 22 11",
-    email: "pierre.ngoran@email.com",
-    ville: "San Pedro",
-    inscriptionDate: "12 oct. 2025",
-    nombreReservations: 4,
-    totalDepense: 980000,
-    statut: "actif",
-  },
-  {
-    id: "CLI-006",
-    nom: "Konan",
-    prenom: "Evelyne",
-    telephone: "+225 07 22 44 66 88",
-    email: "evelyne.konan@email.com",
-    ville: "Abidjan",
-    inscriptionDate: "5 nov. 2025",
-    nombreReservations: 2,
-    totalDepense: 340000,
-    statut: "actif",
-  },
-  {
-    id: "CLI-007",
-    nom: "Diabaté",
-    prenom: "Ismaël",
-    telephone: "+225 07 77 88 99 00",
-    email: "ismael.diabate@email.com",
-    ville: "Abidjan",
-    inscriptionDate: "18 déc. 2025",
-    nombreReservations: 6,
-    totalDepense: 1850000,
-    statut: "actif",
-  },
-  {
-    id: "CLI-008",
-    nom: "Aka",
-    prenom: "Sylvie",
-    telephone: "+225 07 33 44 55 66",
-    email: "sylvie.aka@email.com",
-    ville: "Yamoussoukro",
-    inscriptionDate: "2 jan. 2026",
-    nombreReservations: 1,
-    totalDepense: 130000,
-    statut: "nouveau",
-  },
-  {
-    id: "CLI-009",
-    nom: "Traoré",
-    prenom: "Moussa",
-    telephone: "+225 07 66 55 44 33",
-    email: "moussa.traore@email.com",
-    ville: "Abidjan",
-    inscriptionDate: "10 fév. 2026",
-    nombreReservations: 2,
-    totalDepense: 750000,
-    statut: "nouveau",
-  },
-  {
-    id: "CLI-010",
-    nom: "Coulibaly",
-    prenom: "Awa",
-    telephone: "+225 07 88 77 66 55",
-    email: "awa.coulibaly@email.com",
-    ville: "Bouaké",
-    inscriptionDate: "15 fév. 2026",
-    nombreReservations: 0,
-    totalDepense: 0,
-    statut: "nouveau",
-  },
-];
 
 // ---------------------------------------------------------------------------
 // Helpers

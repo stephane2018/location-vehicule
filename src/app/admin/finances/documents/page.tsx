@@ -4,7 +4,6 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
-  Plus,
   FileText,
   FileCheck,
   FileClock,
@@ -14,22 +13,22 @@ import {
   Trash2,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+} from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { Input } from "@/shared/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/components/ui/select";
 import {
   Table,
   TableBody,
@@ -37,11 +36,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/shared/components/ui/table";
 
-import { DOCUMENTS } from "@/data/mock/documents";
-import { formatMontant, formatDate } from "@/utils/adminHelpers";
-import type { DocumentType, DocumentStatut } from "@/types/admin";
+import { DOCUMENTS } from "@/core/data/mock/documents";
+import { formatMontant, formatDate } from "@/core/utils/adminHelpers";
+import type { DocumentType, DocumentStatut } from "@/core/types/admin";
+import { AddDocumentModal } from "./AddDocumentModal";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -182,10 +182,7 @@ export default function DocumentsPage() {
             Gestion des pro-formas, factures et documents comptables
           </p>
         </div>
-        <Button className="shrink-0">
-          <Plus className="size-4" />
-          Nouveau pro-forma
-        </Button>
+        <AddDocumentModal />
       </div>
 
       {/* Stats cards */}

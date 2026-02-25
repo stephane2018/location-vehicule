@@ -14,35 +14,35 @@ import {
   MessageSquare,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/shared/components/ui/badge";
+import { Button } from "@/shared/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+} from "@/shared/components/ui/card";
+import { Separator } from "@/shared/components/ui/separator";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/tabs";
+} from "@/shared/components/ui/tabs";
 import {
   formatKilometrage,
   formatDate,
-} from "@/utils/adminHelpers";
+} from "@/core/utils/adminHelpers";
 import {
   INSPECTIONS,
   RESERVATIONS_MOCK,
-} from "@/data/mock/inspections";
-import type { PointControle } from "@/types/admin";
+} from "@/core/data/mock/inspections";
+import type { PointControle } from "@/core/types/admin";
 
-import CheckpointGroup from "@/components/admin/inspection/CheckpointGroup";
-import FuelLevelIndicator from "@/components/admin/inspection/FuelLevelIndicator";
-import InspectionSummary from "@/components/admin/inspection/InspectionSummary";
-import PhotoGallery from "@/components/admin/inspection/PhotoGallery";
+import CheckpointGroup from "@/shared/components/admin/inspection/CheckpointGroup";
+import FuelLevelIndicator from "@/shared/components/admin/inspection/FuelLevelIndicator";
+import InspectionSummary from "@/shared/components/admin/inspection/InspectionSummary";
+import PhotoGallery from "@/shared/components/admin/inspection/PhotoGallery";
 
 // ---------------------------------------------------------------------------
 // Helpers

@@ -15,17 +15,17 @@ import {
   CircleDot,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/shared/components/ui/badge";
+import { Button } from "@/shared/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { formatMontant, formatDate } from "@/utils/adminHelpers";
-import { RESERVATIONS_MOCK } from "@/data/mock/inspections";
+} from "@/shared/components/ui/card";
+import { Separator } from "@/shared/components/ui/separator";
+import { formatMontant, formatDate } from "@/core/utils/adminHelpers";
+import { RESERVATIONS_MOCK } from "@/core/data/mock/inspections";
 
 // ---------------------------------------------------------------------------
 // Statut config

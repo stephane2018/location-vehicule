@@ -19,14 +19,14 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+} from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { Button } from "@/shared/components/ui/button";
 import {
   Alert,
   AlertTitle,
   AlertDescription,
-} from "@/components/ui/alert";
+} from "@/shared/components/ui/alert";
 import {
   Table,
   TableBody,
@@ -34,18 +34,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/shared/components/ui/table";
 
 import {
   GARAGES,
   INTERVENTIONS,
   MAINTENANCE_VEHICULES,
-} from "@/data/mock/garage";
-import { CROSS_REPORT, VEHICLE_FINANCIALS } from "@/data/mock/finances";
-import { formatMontant, formatDate } from "@/utils/adminHelpers";
+} from "@/core/data/mock/garage";
+import { CROSS_REPORT, VEHICLE_FINANCIALS } from "@/core/data/mock/finances";
+import { formatMontant, formatDate } from "@/core/utils/adminHelpers";
 
-import CrossReportChart from "@/components/admin/charts/CrossReportChart";
-import ImmobilizationChart from "@/components/admin/charts/ImmobilizationChart";
+import CrossReportChart from "@/shared/components/admin/charts/CrossReportChart";
+import ImmobilizationChart from "@/shared/components/admin/charts/ImmobilizationChart";
 
 // ---------------------------------------------------------------------------
 // Types & Config
@@ -55,7 +55,7 @@ import type {
   InterventionType,
   InterventionStatut,
   UrgenceNiveau,
-} from "@/types/admin";
+} from "@/core/types/admin";
 
 const TYPE_CONFIG: Record<InterventionType, { label: string; className: string }> = {
   maintenance_preventive: {

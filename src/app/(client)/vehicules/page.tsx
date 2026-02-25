@@ -1,26 +1,26 @@
 "use client";
 
-import VehicleCard from "@/components/organisms/VehicleCard";
+import VehicleCard from "@/shared/components/Layout/VehicleCard";
 import VehicleFilters, {
   DEFAULT_FILTERS,
   type FilterState,
-} from "@/components/organisms/VehicleFilters";
-import { Button } from "@/components/ui/button";
+} from "@/shared/components/Layout/VehicleFilters";
+import { Button } from "@/shared/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/components/ui/select";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { VEHICLES, type Vehicle } from "@/utils/vehicleData";
+} from "@/shared/components/ui/sheet";
+import { VEHICLES, type Vehicle } from "@/core/utils/vehicleData";
 import {
   Car,
   ChevronLeft,
@@ -405,7 +405,7 @@ export default function VehiculesPage() {
           }}
         />
 
-        <div className="relative mx-auto max-w-screen-xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
           <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
               Catalogue
@@ -443,12 +443,12 @@ export default function VehiculesPage() {
         {/* Bottom gradient fade */}
         <div
           aria-hidden="true"
-          className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"
+          className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/20 to-transparent"
         />
       </section>
 
       {/* ── Main content ── */}
-      <main className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Toolbar */}
         <div className="mb-6">
           <Toolbar

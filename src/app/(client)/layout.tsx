@@ -1,4 +1,4 @@
-import ClientLayout from "@/components/templates/ClientLayout";
+import ClientLayout from "@/shared/components/templates/ClientLayout";
 
 export default function ClientRouteLayout({
   children,

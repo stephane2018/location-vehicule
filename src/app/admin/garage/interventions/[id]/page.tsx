@@ -24,28 +24,28 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Progress } from "@/components/ui/progress";
+} from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { Button } from "@/shared/components/ui/button";
+import { Separator } from "@/shared/components/ui/separator";
+import { Progress } from "@/shared/components/ui/progress";
 
 import {
   INTERVENTIONS,
   GARAGES,
   MAINTENANCE_VEHICULES,
-} from "@/data/mock/garage";
+} from "@/core/data/mock/garage";
 import {
   formatMontant,
   formatKilometrage,
   formatDate,
-} from "@/utils/adminHelpers";
+} from "@/core/utils/adminHelpers";
 
 import type {
   InterventionType,
   InterventionStatut,
   UrgenceNiveau,
-} from "@/types/admin";
+} from "@/core/types/admin";
 
 // ---------------------------------------------------------------------------
 // Badge configs

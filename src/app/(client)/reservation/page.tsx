@@ -2,19 +2,19 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "@/shared/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/shared/components/ui/card";
+import { Input } from "@/shared/components/ui/input";
+import { Label } from "@/shared/components/ui/label";
+import { Badge } from "@/shared/components/ui/badge";
+import { Separator } from "@/shared/components/ui/separator";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/components/ui/select";
 import {
   ArrowRight,
   CalendarDays,
@@ -27,7 +27,7 @@ import {
   Star,
   User,
 } from "lucide-react";
-import { VEHICLES, AGENCIES } from "@/utils/vehicleData";
+import { VEHICLES, AGENCIES } from "@/core/utils/vehicleData";
 
 // ─── Steps ───────────────────────────────────────────────────────────────────
 
@@ -163,7 +163,7 @@ export default function ReservationPage() {
 
         <div
           aria-hidden="true"
-          className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"
+          className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/20 to-transparent"
         />
       </section>
 

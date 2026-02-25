@@ -14,8 +14,8 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+} from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -23,19 +23,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/shared/components/ui/table";
 
 import {
   GLOBAL_FINANCIALS,
   VEHICLE_FINANCIALS,
   REVENUE_BY_PERIOD,
   CROSS_REPORT,
-} from "@/data/mock/finances";
-import { formatMontant, formatPourcentage } from "@/utils/adminHelpers";
+} from "@/core/data/mock/finances";
+import { formatMontant, formatPourcentage } from "@/core/utils/adminHelpers";
 
-import RevenueChart from "@/components/admin/charts/RevenueChart";
-import ProfitabilityChart from "@/components/admin/charts/ProfitabilityChart";
-import CrossAnalysisChart from "@/components/admin/charts/CrossAnalysisChart";
+import RevenueChart from "@/shared/components/admin/charts/RevenueChart";
+import ProfitabilityChart from "@/shared/components/admin/charts/ProfitabilityChart";
+import CrossAnalysisChart from "@/shared/components/admin/charts/CrossAnalysisChart";
 
 // ---------------------------------------------------------------------------
 // KPI definitions

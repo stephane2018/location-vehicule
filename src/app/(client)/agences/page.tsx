@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+// import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Button } from "@/shared/components/ui/button";
+import { Badge } from "@/shared/components/ui/badge";
 import {
   Building2,
   Car,
@@ -128,14 +128,12 @@ function AgenceCard({ agence }: { agence: AgencePublic }) {
     <div className="group flex flex-col overflow-hidden rounded-2xl border border-border/50 bg-card transition-all duration-300 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-0.5">
       {/* Image */}
       <div className="relative h-48 w-full overflow-hidden">
-        <Image
+        <img
           src={agence.image}
           alt={`Agence ${agence.nom} - ${agence.ville}`}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
 
         {/* Overlay content */}
         <div className="absolute bottom-4 left-4 right-4">
@@ -214,6 +212,7 @@ function AgenceCard({ agence }: { agence: AgencePublic }) {
 // ─── Main Page ───────────────────────────────────────────────────────────────
 
 export default function AgencesPage() {
+  const router = useRouter();
   const totalVehicules = AGENCES.reduce((s, a) => s + a.nombreVehicules, 0);
 
   return (
@@ -243,7 +242,7 @@ export default function AgencesPage() {
           }}
         />
 
-        <div className="relative mx-auto max-w-screen-xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
           <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
               Notre réseau
@@ -282,11 +281,11 @@ export default function AgencesPage() {
         {/* Bottom gradient line */}
         <div
           aria-hidden="true"
-          className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"
+          className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/20 to-transparent"
         />
       </section>
 
-      <main className="mx-auto max-w-screen-xl px-4 py-10 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         {/* ── Trust bar ── */}
         <div className="mb-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 rounded-2xl border border-border/50 bg-card px-6 py-4 shadow-sm">
           {[
@@ -402,13 +401,11 @@ export default function AgencesPage() {
               <Button
                 variant="outline"
                 size="lg"
-                className="gap-2 border-white/15 bg-transparent text-white hover:bg-white/5 hover:text-white"
-                asChild
+                className="gap-2 border-white/15 bg-transparent text-white hover:bg-white/5 hover:text-white w-full sm:w-auto"
+                onClick={() => router.push("/contact")}
               >
-                <Link href="/contact">
-                  Nous contacter
-                  <ArrowRight className="size-4" />
-                </Link>
+                Nous contacter
+                <ArrowRight className="size-4" />
               </Button>
             </div>
             <p className="mt-6 text-xs text-white/25">

@@ -19,10 +19,10 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+} from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { Button } from "@/shared/components/ui/button";
+import { Separator } from "@/shared/components/ui/separator";
 import {
   Table,
   TableBody,
@@ -30,7 +30,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/shared/components/ui/table";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -327,6 +327,143 @@ export default function AdminDashboardPage() {
           ))}
         </div>
       </section>
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {/* Revenue Chart */}
+        <Card className="gap-0 py-0">
+          <CardHeader className="px-6 py-5 border-b">
+            <CardTitle className="text-base">Évolution des revenus</CardTitle>
+            <CardDescription className="mt-0.5">
+              Revenus mensuels sur les 6 derniers mois
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="h-80 flex items-end justify-between gap-2">
+              {[
+                { month: "Sep", value: 9500000, label: "9.5M", reservations: 38, avgDuration: 3.8 },
+                { month: "Oct", value: 10200000, label: "10.2M", reservations: 42, avgDuration: 4.1 },
+                { month: "Nov", value: 11800000, label: "11.8M", reservations: 48, avgDuration: 4.5 },
+                { month: "Déc", value: 10500000, label: "10.5M", reservations: 45, avgDuration: 3.9 },
+                { month: "Jan", value: 11200000, label: "11.2M", reservations: 44, avgDuration: 4.2 },
+                { month: "Fév", value: 12500000, label: "12.5M", reservations: 47, avgDuration: 4.3 },
+              ].map((item, index) => {
+                const maxValue = 13000000;
+                const heightPx = (item.value / maxValue) * 280; // 280px = h-80 - spacing
+                const isLast = index === 5;
+                return (
+                  <div key={item.month} className="flex-1 flex flex-col items-center gap-2">
+                    <div className="relative w-full group h-full flex items-end">
+                      <div
+                        className={`w-full rounded-t-lg transition-all ${
+                          isLast
+                            ? "bg-primary"
+                            : "bg-muted hover:bg-primary/20"
+                        }`}
+                        style={{ height: `${heightPx}px` }}
+                      >
+                        <div className="absolute -top-24 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                          <div className="bg-gray-900 text-white px-3 py-2 rounded-lg shadow-xl border border-gray-700">
+                            <div className="text-xs font-semibold mb-1.5 text-white">{item.month} 2026</div>
+                            <div className="space-y-1 text-xs">
+                              <div className="flex justify-between gap-4">
+                                <span className="text-gray-300">Revenus:</span>
+                                <span className="font-medium text-white">{item.label} FCFA</span>
+                              </div>
+                              <div className="flex justify-between gap-4">
+                                <span className="text-gray-300">Réservations:</span>
+                                <span className="font-medium text-white">{item.reservations}</span>
+                              </div>
+                              <div className="flex justify-between gap-4">
+                                <span className="text-gray-300">Durée moy.:</span>
+                                <span className="font-medium text-white">{item.avgDuration} jours</span>
+                              </div>
+                              <div className="flex justify-between gap-4 pt-1 border-t border-gray-700">
+                                <span className="text-gray-300">Panier moy.:</span>
+                                <span className="font-medium text-white">
+                                  {Math.round(item.value / item.reservations / 1000)}k FCFA
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <span className="text-xs text-muted-foreground font-medium">
+                      {item.month}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Occupation Chart */}
+        <Card className="gap-0 py-0">
+          <CardHeader className="px-6 py-5 border-b">
+            <CardTitle className="text-base">Taux d'occupation</CardTitle>
+            <CardDescription className="mt-0.5">
+              Évolution hebdomadaire du parc
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="h-80 flex flex-col justify-between">
+              {/* Legend */}
+              <div className="flex items-center gap-6 mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-primary" />
+                  <span className="text-xs text-muted-foreground">En location</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-muted" />
+                  <span className="text-xs text-muted-foreground">Disponibles</span>
+                </div>
+              </div>
+
+              {/* Bars */}
+              <div className="flex-1 flex items-end justify-between gap-3">
+                {[
+                  { day: "Lun", occupied: 28, available: 17 },
+                  { day: "Mar", occupied: 30, available: 15 },
+                  { day: "Mer", occupied: 26, available: 19 },
+                  { day: "Jeu", occupied: 32, available: 13 },
+                  { day: "Ven", occupied: 29, available: 16 },
+                  { day: "Sam", occupied: 35, available: 10 },
+                  { day: "Dim", occupied: 31, available: 14 },
+                ].map((item) => {
+                  const total = 45;
+                  const occupiedPercent = (item.occupied / total) * 100;
+                  const availablePercent = (item.available / total) * 100;
+                  return (
+                    <div key={item.day} className="flex-1 flex flex-col items-center gap-2">
+                      <div className="w-full flex flex-col gap-1 h-64">
+                        <div
+                          className="w-full bg-primary rounded-t-lg transition-all hover:opacity-80 relative group"
+                          style={{ height: `${occupiedPercent}%` }}
+                        >
+                          <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div className="bg-popover text-popover-foreground px-2 py-1 rounded text-xs font-medium shadow-md whitespace-nowrap">
+                              {item.occupied} véhicules
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className="w-full bg-muted rounded-b-lg transition-all hover:opacity-80"
+                          style={{ height: `${availablePercent}%` }}
+                        />
+                      </div>
+                      <span className="text-xs text-muted-foreground font-medium">
+                        {item.day}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Reservations table + Quick actions */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">

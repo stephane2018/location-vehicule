@@ -17,17 +17,17 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+} from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/components/ui/select";
 import {
   Table,
   TableBody,
@@ -35,16 +35,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/shared/components/ui/table";
 
-import { INTERVENTIONS, GARAGES } from "@/data/mock/garage";
-import { formatMontant, formatDate } from "@/utils/adminHelpers";
+import { INTERVENTIONS, GARAGES } from "@/core/data/mock/garage";
+import { formatMontant, formatDate } from "@/core/utils/adminHelpers";
 
 import type {
   InterventionType,
   InterventionStatut,
   UrgenceNiveau,
-} from "@/types/admin";
+} from "@/core/types/admin";
 
 // ---------------------------------------------------------------------------
 // Config

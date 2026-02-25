@@ -18,35 +18,35 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Progress } from "@/components/ui/progress";
+} from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import { Button } from "@/shared/components/ui/button";
+import { Separator } from "@/shared/components/ui/separator";
+import { Progress } from "@/shared/components/ui/progress";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/shared/components/ui/accordion";
 
 import {
   MAINTENANCE_VEHICULES,
   INTERVENTIONS,
-} from "@/data/mock/garage";
+} from "@/core/data/mock/garage";
 import {
   formatMontant,
   formatKilometrage,
   formatDate,
-} from "@/utils/adminHelpers";
+} from "@/core/utils/adminHelpers";
 
-import MileageChart from "@/components/admin/charts/MileageChart";
-import MaintenanceCostChart from "@/components/admin/charts/MaintenanceCostChart";
+import MileageChart from "@/shared/components/admin/charts/MileageChart";
+import MaintenanceCostChart from "@/shared/components/admin/charts/MaintenanceCostChart";
 
 import type {
   InterventionType,
   InterventionStatut,
-} from "@/types/admin";
+} from "@/core/types/admin";
 
 // ---------------------------------------------------------------------------
 // Badge configs

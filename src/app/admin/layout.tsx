@@ -23,18 +23,18 @@ import {
   Wrench,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import { Badge } from "@/shared/components/ui/badge";
+import { Separator } from "@/shared/components/ui/separator";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@/shared/components/ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,25 +42,58 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
+} from "@/shared/components/ui/dropdown-menu";
+import { cn } from "@/core/lib/utils";
 
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
 
-const NAV_ITEMS = [
-  { href: "/admin", label: "Tableau de bord", icon: LayoutDashboard },
-  { href: "/admin/vehicules", label: "Véhicules", icon: Car },
-  { href: "/admin/agences", label: "Agences", icon: Building2 },
-  { href: "/admin/reservations", label: "Réservations", icon: CalendarCheck },
-  { href: "/admin/clients", label: "Clients", icon: Users },
-  { href: "/admin/finances", label: "Finances", icon: Wallet },
-  { href: "/admin/exploitation", label: "Exploitation", icon: Activity },
-  { href: "/admin/garage", label: "Garage", icon: Wrench },
-  { href: "/admin/rapports", label: "Rapports", icon: BarChart3 },
-  { href: "/admin/parametres", label: "Paramètres", icon: Settings },
-] as const;
+interface NavItem {
+  href: string;
+  label: string;
+  icon: React.ElementType;
+}
+
+interface NavSection {
+  title?: string;
+  items: NavItem[];
+}
+
+const NAV_SECTIONS: NavSection[] = [
+  {
+    items: [
+      { href: "/admin", label: "Tableau de bord", icon: LayoutDashboard },
+    ],
+  },
+  {
+    title: "Gestion",
+    items: [
+      { href: "/admin/vehicules", label: "Véhicules", icon: Car },
+      { href: "/admin/agences", label: "Agences", icon: Building2 },
+      { href: "/admin/reservations", label: "Réservations", icon: CalendarCheck },
+      { href: "/admin/clients", label: "Clients", icon: Users },
+    ],
+  },
+  {
+    title: "Analyse",
+    items: [
+      { href: "/admin/finances", label: "Finances", icon: Wallet },
+      { href: "/admin/exploitation", label: "Exploitation", icon: Activity },
+      { href: "/admin/garage", label: "Garage", icon: Wrench },
+      { href: "/admin/rapports", label: "Rapports", icon: BarChart3 },
+    ],
+  },
+  {
+    title: "Système",
+    items: [
+      { href: "/admin/parametres", label: "Paramètres", icon: Settings },
+    ],
+  },
+];
+
+// Flat list for breadcrumb lookup
+const NAV_ITEMS = NAV_SECTIONS.flatMap((section) => section.items);
 
 // ---------------------------------------------------------------------------
 // Helper: breadcrumb label derived from pathname
@@ -168,20 +201,31 @@ function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
       <Separator className="bg-sidebar-border mx-4 w-auto" />
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-1 px-3 py-4">
-        {NAV_ITEMS.map((item) => (
-          <NavLink
-            key={item.href}
-            href={item.href}
-            label={item.label}
-            icon={item.icon}
-            active={
-              item.href === "/admin"
-                ? pathname === "/admin"
-                : pathname.startsWith(item.href)
-            }
-            onClick={onNavClick}
-          />
+      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-4">
+        {NAV_SECTIONS.map((section, idx) => (
+          <div key={idx}>
+            {section.title && (
+              <p className="px-3 mb-1 text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
+                {section.title}
+              </p>
+            )}
+            <div className="space-y-0.5">
+              {section.items.map((item) => (
+                <NavLink
+                  key={item.href}
+                  href={item.href}
+                  label={item.label}
+                  icon={item.icon}
+                  active={
+                    item.href === "/admin"
+                      ? pathname === "/admin"
+                      : pathname.startsWith(item.href)
+                  }
+                  onClick={onNavClick}
+                />
+              ))}
+            </div>
+          </div>
         ))}
       </nav>
 
@@ -223,7 +267,7 @@ function TopBar({ pathname }: TopBarProps) {
   const breadcrumbs = getBreadcrumb(pathname);
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 items-center border-b bg-card/80 backdrop-blur-sm px-4 gap-4">
+    <header className="sticky top-0 z-40 flex h-14 items-center border-b bg-card/80 backdrop-blur-sm px-4 gap-4" suppressHydrationWarning>
       {/* Mobile hamburger */}
       <Sheet>
         <SheetTrigger asChild>
@@ -232,6 +276,7 @@ function TopBar({ pathname }: TopBarProps) {
             size="icon"
             className="shrink-0 lg:hidden"
             aria-label="Ouvrir le menu"
+            suppressHydrationWarning
           >
             <Menu className="size-5" />
           </Button>
@@ -302,6 +347,7 @@ function TopBar({ pathname }: TopBarProps) {
             variant="ghost"
             className="relative shrink-0 flex items-center gap-2 px-2 h-9"
             aria-label="Menu utilisateur"
+            suppressHydrationWarning
           >
             <Avatar size="sm">
               <AvatarImage src="" alt="Admin" />
@@ -368,7 +414,7 @@ export default function AdminLayout({
     <div className="flex min-h-screen bg-background">
       {/* Desktop sidebar */}
       <aside
-        className="hidden lg:flex lg:w-60 xl:w-64 shrink-0 flex-col bg-sidebar border-r border-sidebar-border"
+        className="hidden lg:flex lg:w-60 xl:w-64 shrink-0 flex-col sticky top-0 h-screen bg-sidebar border-r border-sidebar-border"
         aria-label="Navigation principale"
       >
         <SidebarContent pathname={pathname} />
