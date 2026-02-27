@@ -3,10 +3,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
-  Search,
-  Calendar,
-  MapPin,
-  Tag,
   Shield,
   Star,
   Clock,
@@ -17,36 +13,9 @@ import {
   Key,
   Navigation,
 } from "lucide-react";
-import { Button } from "@/shared/components/ui/button";
-import { Input } from "@/shared/components/ui/input";
-import { Label } from "@/shared/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/shared/components/ui/select";
 import { VEHICLES } from "@/core/utils/vehicleData";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
-
-const AGENCIES = [
-  { value: "abidjan-cocody", label: "Abidjan — Cocody" },
-  { value: "abidjan-plateau", label: "Abidjan — Plateau" },
-  { value: "yamoussoukro", label: "Yamoussoukro" },
-  { value: "bouake", label: "Bouaké" },
-  { value: "san-pedro", label: "San Pedro" },
-] as const;
-
-const CATEGORIES = [
-  { value: "tous", label: "Toutes catégories" },
-  { value: "citadine", label: "Citadine" },
-  { value: "berline", label: "Berline" },
-  { value: "suv", label: "SUV" },
-  { value: "utilitaire", label: "Utilitaire" },
-  { value: "luxe", label: "Luxe" },
-] as const;
 
 const TRUST_BADGES = [
   { icon: Shield, label: "Assurance tous risques" },
@@ -78,10 +47,6 @@ const BG_ICONS = [
 
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [agency, setAgency] = useState("");
-  const [category, setCategory] = useState("");
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -90,14 +55,10 @@ export function HeroSection() {
     return () => clearInterval(timer);
   }, []);
 
-  function handleSearch() {
-    console.log({ startDate, endDate, agency, category });
-  }
-
   const currentVehicle = HERO_SLIDES[currentSlide];
 
   return (
-    <section className="relative overflow-hidden" aria-label="Recherche de véhicules">
+    <section className="relative" aria-label="Recherche de véhicules">
       {/* ── Dark base ── */}
       <div className="absolute inset-0 bg-[oklch(0.10_0.02_250)]" />
 
@@ -279,179 +240,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* ── Search bar at bottom ── */}
-        <div className="pb-10 sm:pb-14 lg:pb-20">
-          <div
-            aria-hidden="true"
-            className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[80%] h-32 bg-primary/8 blur-3xl rounded-full"
-          />
-
-          <div className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-4 sm:p-6 shadow-2xl backdrop-blur-xl">
-            {/* Desktop: inline row */}
-            <div className="hidden lg:flex items-end gap-3">
-              <div className="flex-1 flex flex-col gap-1.5">
-                <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
-                  <Calendar className="size-3 text-primary" />
-                  Date de début
-                </Label>
-                <Input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="h-11 border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-primary/50 focus:ring-primary/20"
-                />
-              </div>
-
-              <div className="flex-1 flex flex-col gap-1.5">
-                <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
-                  <Calendar className="size-3 text-primary" />
-                  Date de fin
-                </Label>
-                <Input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="h-11 border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-primary/50 focus:ring-primary/20"
-                />
-              </div>
-
-              <div className="flex-1 flex flex-col gap-1.5">
-                <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
-                  <MapPin className="size-3 text-primary" />
-                  Agence
-                </Label>
-                <Select value={agency} onValueChange={setAgency}>
-                  <SelectTrigger className="h-11 border-white/10 bg-white/5 text-white [&>span]:text-white/60">
-                    <SelectValue placeholder="Choisir une agence" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {AGENCIES.map((a) => (
-                      <SelectItem key={a.value} value={a.value}>
-                        {a.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="flex-1 flex flex-col gap-1.5">
-                <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
-                  <Tag className="size-3 text-primary" />
-                  Catégorie
-                </Label>
-                <Select value={category} onValueChange={setCategory}>
-                  <SelectTrigger className="h-11 border-white/10 bg-white/5 text-white [&>span]:text-white/60">
-                    <SelectValue placeholder="Toutes catégories" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CATEGORIES.map((c) => (
-                      <SelectItem key={c.value} value={c.value}>
-                        {c.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <Button
-                size="lg"
-                className="h-11 gap-2 px-8 font-semibold shrink-0"
-                onClick={handleSearch}
-              >
-                <Search className="size-4" />
-                Rechercher
-              </Button>
-            </div>
-
-            {/* Mobile: stacked layout */}
-            <div className="lg:hidden space-y-4">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex flex-col gap-1.5">
-                  <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
-                    <Calendar className="size-3 text-primary" />
-                    Début
-                  </Label>
-                  <Input
-                    type="date"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    className="h-11 border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-primary/50 focus:ring-primary/20"
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
-                    <Calendar className="size-3 text-primary" />
-                    Fin
-                  </Label>
-                  <Input
-                    type="date"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                    className="h-11 border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-primary/50 focus:ring-primary/20"
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
-                  <MapPin className="size-3 text-primary" />
-                  Agence de retrait
-                </Label>
-                <Select value={agency} onValueChange={setAgency}>
-                  <SelectTrigger className="h-11 border-white/10 bg-white/5 text-white [&>span]:text-white/60">
-                    <SelectValue placeholder="Choisir une agence" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {AGENCIES.map((a) => (
-                      <SelectItem key={a.value} value={a.value}>
-                        {a.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <Label className="flex items-center gap-1.5 text-[11px] font-medium text-white/50">
-                  <Tag className="size-3 text-primary" />
-                  Catégorie
-                </Label>
-                <Select value={category} onValueChange={setCategory}>
-                  <SelectTrigger className="h-11 border-white/10 bg-white/5 text-white [&>span]:text-white/60">
-                    <SelectValue placeholder="Toutes catégories" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CATEGORIES.map((c) => (
-                      <SelectItem key={c.value} value={c.value}>
-                        {c.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <Button
-                size="lg"
-                className="w-full h-12 gap-2 font-semibold"
-                onClick={handleSearch}
-              >
-                <Search className="size-4" />
-                Rechercher un véhicule
-              </Button>
-            </div>
-
-            <p className="mt-4 text-center text-[11px] text-white/25">
-              Paiement sécurisé par Mobile Money · Aucun frais caché · Kilométrage illimité
-            </p>
-          </div>
-        </div>
       </div>
-
-      {/* Bottom border gradient */}
-      <div
-        aria-hidden="true"
-        className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent"
-      />
     </section>
   );
 }
