@@ -274,67 +274,7 @@ export default function ReviewStep({
         </div>
       </div>
 
-      {/* Booking Summary */}
-      <div className="bg-primary/5 border-2 border-primary/20 rounded-lg p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">
-          Récapitulatif de la réservation
-        </h3>
-
-        <div className="space-y-3">
-          <div className="flex justify-between">
-            <span className="text-gray-700">Véhicule</span>
-            <span className="font-semibold">{vehicle.name}</span>
-          </div>
-
-          <div className="flex justify-between">
-            <span className="text-gray-700">Tarif journalier</span>
-            <span className="font-semibold">
-              {vehicle.pricePerDay.toLocaleString("fr-FR")} FCFA
-            </span>
-          </div>
-
-          <div className="flex justify-between">
-            <span className="text-gray-700">Protection</span>
-            <span className="font-semibold">
-              {protectionPackage === "no-extra"
-                ? "Inclus"
-                : protectionPackage.toUpperCase()}
-            </span>
-          </div>
-
-          {Object.keys(addOns).filter((key) => addOns[key].enabled).length > 0 && (
-            <>
-              <div className="border-t border-gray-300 pt-2 mt-2">
-                <p className="text-sm font-semibold text-gray-700 mb-2">
-                  Services additionnels:
-                </p>
-                {Object.keys(addOns)
-                  .filter((key) => addOns[key].enabled)
-                  .map((key) => (
-                    <div key={key} className="flex justify-between text-sm">
-                      <span className="text-gray-600">
-                        {key} (x{addOns[key].quantity})
-                      </span>
-                    </div>
-                  ))}
-              </div>
-            </>
-          )}
-
-          <div className="border-t-2 border-primary/30 pt-3 mt-3">
-            <div className="flex justify-between items-baseline">
-              <span className="text-lg font-bold text-gray-900">Total</span>
-              <div className="text-right">
-                <span className="text-3xl font-bold text-primary">
-                  {vehicle.pricePerDay.toLocaleString("fr-FR")} FCFA
-                </span>
-                <p className="text-xs text-gray-600 mt-1">par jour</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      
       {/* Security Notice */}
       <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex gap-3">
         <Shield className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />

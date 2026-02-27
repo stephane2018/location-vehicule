@@ -51,14 +51,6 @@ export default function ProtectionCard({
           : "shadow-md hover:shadow-xl border border-gray-100"
       }`}
     >
-      {/* Top Accent Bar */}
-      <div
-        className={`h-1 w-full rounded-t-2xl ${
-          isSelected
-            ? "bg-linear-to-r from-primary via-orange-400 to-primary"
-            : "bg-gray-100"
-        }`}
-      ></div>
 
       {/* Content Container */}
       <div className="p-6 overflow-hidden">

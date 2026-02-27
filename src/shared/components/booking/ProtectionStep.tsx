@@ -91,7 +91,6 @@ export default function ProtectionStep({
 }: ProtectionStepProps) {
   return (
     <div className="space-y-6">
-      {/* Protection Packages Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {PROTECTION_PACKAGES.map((pkg) => (
           <ProtectionCard
