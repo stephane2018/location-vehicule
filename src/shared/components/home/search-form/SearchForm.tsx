@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Star } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { DateTimeInput } from "@/shared/components/ui";
 import { LocationField, ReturnLocationField, VehicleTypeTabs } from "./fields";
 
 export function SearchForm() {
+  const router = useRouter();
   const [vehicleType, setVehicleType] = useState("cars");
   const [pickupLocation, setPickupLocation] = useState("Paris Orly Airport");
   const [returnLocation, setReturnLocation] = useState("");
@@ -25,15 +27,17 @@ export function SearchForm() {
   };
 
   function handleSearch() {
-    console.log({
+    const params = new URLSearchParams({
       vehicleType,
-      pickupLocation,
-      returnLocation: differentReturn ? returnLocation : pickupLocation,
-      pickupDate,
+      pickup: pickupLocation,
+      return: differentReturn ? returnLocation : pickupLocation,
+      pickupDate: pickupDate.toISOString(),
       pickupTime,
-      returnDate,
+      returnDate: returnDate.toISOString(),
       returnTime,
     });
+    
+    router.push(`/recherche?${params.toString()}`);
   }
 
   return (
