@@ -26,11 +26,10 @@ export function StickySearchBar() {
       <div ref={sentinelRef} className="h-0" />
 
       <div
-        className={`sticky top-0 z-40 transition-all duration-300 ${
-          isStuck
-            ? "py-3 top-15 shadow-sm"
-            : "bg-[oklch(0.10_0.02_250)] pb-10 sm:pb-14 lg:pb-6 -mt-2 py-12"
-        }`}
+        className={` py-10 z-40 transition-all duration-300
+         
+          bg-[oklch(0.10_0.02_250)] pb-10 sm:pb-14 lg:pb-6  py-12"
+        `}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SearchForm />
