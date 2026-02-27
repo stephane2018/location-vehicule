@@ -1,8 +1,11 @@
 "use client";
 
-import { Search, Plus, X } from "lucide-react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { MapPin, Plus, X } from "lucide-react";
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
+import { FloatingLocationPicker } from "../FloatingLocationPicker";
+import type { Agence } from "@/core/types/agence";
 
 interface ReturnLocationFieldProps {
   label: string;
@@ -21,24 +24,68 @@ export function ReturnLocationField({
   onToggleDifferentReturn,
   placeholder = "Ville ou agence de retour",
 }: ReturnLocationFieldProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Close on outside click
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
+
+  // Close on Escape
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setIsOpen(false);
+    }
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
+  const handleOpen = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+
+  const handleSelect = useCallback(
+    (agence: Agence) => {
+      onChange(`${agence.nom} - ${agence.ville}`);
+      setIsOpen(false);
+    },
+    [onChange]
+  );
+
   return (
-    <div>
+    <div ref={containerRef} className="relative">
       <Label className="text-xs font-medium text-muted-foreground mb-2 block">
         {label}
       </Label>
       {differentReturn ? (
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/70" />
+          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground/70" />
           <Input
             value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className="pl-10 pr-8 h-12 border-border bg-background text-sm"
+            readOnly
+            onClick={handleOpen}
+            className="pl-10 pr-8 h-12 border-border bg-background text-sm cursor-pointer"
             placeholder={placeholder}
           />
           {value && (
             <button
               type="button"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 onChange("");
                 onToggleDifferentReturn(false);
               }}
@@ -46,6 +93,14 @@ export function ReturnLocationField({
             >
               <X className="size-4" />
             </button>
+          )}
+
+          {/* Floating Location Picker */}
+          {isOpen && (
+            <FloatingLocationPicker
+              onSelect={handleSelect}
+              onClose={() => setIsOpen(false)}
+            />
           )}
         </div>
       ) : (
