@@ -28,7 +28,7 @@ export function StickySearchBar() {
       <div
         className={`sticky top-0 z-40 transition-all duration-300 ${
           isStuck
-            ? " py-3 top-15"
+            ? "py-3 top-15 bg-background/95 backdrop-blur-md shadow-sm"
             : "bg-[oklch(0.10_0.02_250)] pb-10 sm:pb-14 lg:pb-6 -mt-2 py-12"
         }`}
       >

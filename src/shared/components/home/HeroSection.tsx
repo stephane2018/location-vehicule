@@ -33,14 +33,14 @@ const HERO_SLIDES = [
 ];
 
 const BG_ICONS = [
-  { icon: Car, top: "10%", left: "5%", size: "size-10", opacity: "opacity-[0.03]", rotate: "-rotate-12" },
-  { icon: Fuel, top: "20%", right: "8%", size: "size-8", opacity: "opacity-[0.04]", rotate: "rotate-6" },
-  { icon: Settings2, top: "55%", left: "3%", size: "size-9", opacity: "opacity-[0.03]", rotate: "rotate-12" },
-  { icon: Gauge, top: "38%", right: "4%", size: "size-11", opacity: "opacity-[0.035]", rotate: "-rotate-6" },
-  { icon: Key, top: "75%", left: "8%", size: "size-7", opacity: "opacity-[0.04]", rotate: "rotate-15" },
-  { icon: Navigation, top: "68%", right: "10%", size: "size-8", opacity: "opacity-[0.03]", rotate: "-rotate-20" },
-  { icon: Shield, top: "12%", left: "42%", size: "size-6", opacity: "opacity-[0.025]", rotate: "rotate-3" },
-  { icon: Star, top: "82%", right: "28%", size: "size-7", opacity: "opacity-[0.03]", rotate: "-rotate-8" },
+  { icon: Car, top: "10%", left: "5%", size: "size-10", opacity: "opacity-[0.06]", rotate: "-rotate-12" },
+  { icon: Fuel, top: "20%", right: "8%", size: "size-8", opacity: "opacity-[0.07]", rotate: "rotate-6" },
+  { icon: Settings2, top: "55%", left: "3%", size: "size-9", opacity: "opacity-[0.06]", rotate: "rotate-12" },
+  { icon: Gauge, top: "38%", right: "4%", size: "size-11", opacity: "opacity-[0.05]", rotate: "-rotate-6" },
+  { icon: Key, top: "75%", left: "8%", size: "size-7", opacity: "opacity-[0.07]", rotate: "rotate-15" },
+  { icon: Navigation, top: "68%", right: "10%", size: "size-8", opacity: "opacity-[0.06]", rotate: "-rotate-20" },
+  { icon: Shield, top: "12%", left: "42%", size: "size-6", opacity: "opacity-[0.05]", rotate: "rotate-3" },
+  { icon: Star, top: "82%", right: "28%", size: "size-7", opacity: "opacity-[0.06]", rotate: "-rotate-8" },
 ];
 
 // ─── Hero Section ────────────────────────────────────────────────────────────
@@ -68,14 +68,14 @@ export function HeroSection() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 25% 45%, oklch(0.25 0.15 260 / 0.25), transparent)",
+            "radial-gradient(ellipse 60% 50% at 25% 45%, oklch(0.28 0.15 264 / 0.22), transparent)",
         }}
       />
 
       {/* ── Grid pattern ── */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.02]"
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage:
             "linear-gradient(oklch(1 0 0) 1px, transparent 1px), linear-gradient(90deg, oklch(1 0 0) 1px, transparent 1px)",
@@ -90,7 +90,7 @@ export function HeroSection() {
           return (
             <div
               key={i}
-              className={`absolute text-white ${item.opacity} ${item.rotate}`}
+              className={`absolute text-primary ${item.opacity} ${item.rotate}`}
               style={{ top: item.top, left: item.left, right: item.right }}
             >
               <Icon className={item.size} strokeWidth={1} />
@@ -104,9 +104,9 @@ export function HeroSection() {
         <div className="grid grid-cols-1 items-center gap-10 pt-20 sm:pt-24 lg:grid-cols-2 lg:gap-16 lg:pt-32 pb-10 lg:pb-14">
           {/* ── Left: text ── */}
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-sm">
-              <div className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs font-medium tracking-wide text-white/70">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 backdrop-blur-sm">
+              <div className="size-1.5 rounded-full bg-primary animate-pulse" />
+              <span className="text-xs font-medium tracking-wide text-white/60">
                 200+ véhicules disponibles maintenant
               </span>
             </div>
@@ -129,9 +129,9 @@ export function HeroSection() {
               {TRUST_BADGES.map((badge) => (
                 <div
                   key={badge.label}
-                  className="flex items-center gap-2 text-white/40"
+                  className="flex items-center gap-2 text-white/45"
                 >
-                  <badge.icon className="size-4 text-primary/70" />
+                  <badge.icon className="size-4 text-primary/60" />
                   <span className="text-xs font-medium">{badge.label}</span>
                 </div>
               ))}
@@ -149,7 +149,7 @@ export function HeroSection() {
                   <div className="text-2xl font-bold text-white sm:text-3xl">
                     {stat.value}
                   </div>
-                  <div className="mt-0.5 text-[10px] text-white/30 uppercase tracking-wider font-medium">
+                  <div className="mt-0.5 text-[10px] text-white/40 uppercase tracking-wider font-medium">
                     {stat.label}
                   </div>
                 </div>
@@ -162,10 +162,10 @@ export function HeroSection() {
             {/* Glow behind card */}
             <div
               aria-hidden="true"
-              className="absolute -inset-6 rounded-3xl bg-primary/8 blur-3xl"
+              className="absolute -inset-6 rounded-3xl bg-primary/10 blur-3xl"
             />
 
-            <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-3 shadow-2xl backdrop-blur-sm overflow-hidden">
+            <div className="relative rounded-2xl border border-primary/15 bg-primary/[0.03] p-3 shadow-2xl backdrop-blur-sm overflow-hidden">
               {/* Main image */}
               <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden">
                 {HERO_SLIDES.map((v, i) => (
@@ -207,7 +207,7 @@ export function HeroSection() {
                 </div>
 
                 {/* Rating badge */}
-                <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-black/40 px-2.5 py-1 backdrop-blur-sm">
+                <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-black/50 border border-white/10 px-2.5 py-1 backdrop-blur-sm">
                   <Star className="size-3 text-amber-400 fill-amber-400" />
                   <span className="text-[11px] font-semibold text-white">4.9</span>
                 </div>
@@ -222,7 +222,7 @@ export function HeroSection() {
                     onClick={() => setCurrentSlide(i)}
                     className={`relative flex-1 h-14 sm:h-16 rounded-lg overflow-hidden transition-all duration-300 ${
                       i === currentSlide
-                        ? "ring-2 ring-primary ring-offset-1 ring-offset-black/50"
+                        ? "ring-2 ring-primary ring-offset-1 ring-offset-[oklch(0.10_0.02_250)]"
                         : "opacity-50 hover:opacity-80"
                     }`}
                   >

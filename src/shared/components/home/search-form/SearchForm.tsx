@@ -37,7 +37,7 @@ export function SearchForm() {
   }
 
   return (
-    <div className="relative rounded-2xl border border-white/10 bg-white shadow-2xl">
+    <div className="relative rounded-2xl border border-border/50 bg-background shadow-2xl">
       <VehicleTypeTabs value={vehicleType} onChange={setVehicleType} />
 
       <div className="p-4 sm:p-6 relative overflow-visible">
@@ -45,7 +45,7 @@ export function SearchForm() {
           <div className="grid grid-cols-12 gap-4 relative overflow-visible">
             <div className="col-span-3">
               <LocationField
-                label="Pickup"
+                label="Prise en charge"
                 value={pickupLocation}
                 onChange={setPickupLocation}
               />
@@ -54,7 +54,7 @@ export function SearchForm() {
             {/* Return */}
             <div className="col-span-3">
               <ReturnLocationField
-                label="Return"
+                label="Retour"
                 value={returnLocation}
                 onChange={setReturnLocation}
                 differentReturn={differentReturn}
@@ -70,8 +70,8 @@ export function SearchForm() {
                 onDateChange={setPickupDate}
                 onTimeChange={setPickupTime}
                 currentMonth={currentMonth}
-                label="Pickup date"
-                dateBorderColor="border-blue-500"
+                label="Date de depart"
+                dateBorderColor="border-primary"
                 startDate={pickupDate}
                 endDate={returnDate}
                 isPickup={true}
@@ -87,8 +87,8 @@ export function SearchForm() {
                 onDateChange={setReturnDate}
                 onTimeChange={setReturnTime}
                 currentMonth={currentMonth}
-                label="Return date"
-                dateBorderColor="border-gray-300"
+                label="Date de retour"
+                dateBorderColor="border-border"
                 startDate={pickupDate}
                 endDate={returnDate}
                 isPickup={false}
@@ -101,9 +101,9 @@ export function SearchForm() {
           <div>
             <Button
               onClick={handleSearch}
-              className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base"
+              className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base"
             >
-              Show cars
+              Rechercher un vehicule
             </Button>
           </div>
         </div>
@@ -112,14 +112,14 @@ export function SearchForm() {
         <div className="lg:hidden space-y-4 overflow-visible">
           {/* Pickup Location */}
           <LocationField
-            label="Pickup"
+            label="Prise en charge"
             value={pickupLocation}
             onChange={setPickupLocation}
           />
 
           {/* Return Location */}
           <ReturnLocationField
-            label="Return"
+            label="Retour"
             value={returnLocation}
             onChange={setReturnLocation}
             differentReturn={differentReturn}
@@ -135,8 +135,8 @@ export function SearchForm() {
                 onDateChange={setPickupDate}
                 onTimeChange={setPickupTime}
                 currentMonth={currentMonth}
-                label="Pickup date"
-                dateBorderColor="border-blue-500"
+                label="Date de depart"
+                dateBorderColor="border-primary"
                 startDate={pickupDate}
                 endDate={returnDate}
                 isPickup={true}
@@ -150,8 +150,8 @@ export function SearchForm() {
                 onDateChange={setReturnDate}
                 onTimeChange={setReturnTime}
                 currentMonth={currentMonth}
-                label="Return date"
-                dateBorderColor="border-gray-300"
+                label="Date de retour"
+                dateBorderColor="border-border"
                 startDate={pickupDate}
                 endDate={returnDate}
                 isPickup={false}
@@ -161,23 +161,26 @@ export function SearchForm() {
           </div>
         </div>
 
-        {/* Corporate rate link */}
-        <div className="mt-4">
-          <button className="text-sm text-gray-600 hover:text-gray-900 underline">
-            Apply corpo
-          </button>
+        {/* Mobile search button */}
+        <div className="lg:hidden mt-4">
+          <Button
+            onClick={handleSearch}
+            className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base"
+          >
+            Rechercher un vehicule
+          </Button>
         </div>
       </div>
 
       {/* Promo Banner */}
-      <div className="bg-blue-300/20 border-t rounded-b-2xl border-blue-100 px-6 py-3 flex items-center justify-between">
+      <div className="bg-primary/5 border-t border-primary/10 rounded-b-2xl px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="size-8 rounded-full bg-blue-500 flex items-center justify-center">
-            <Star className="size-4 text-white fill-white" />
+          <div className="size-8 rounded-full bg-primary flex items-center justify-center">
+            <Star className="size-4 text-primary-foreground fill-primary-foreground" />
           </div>
-          <p className="text-sm text-gray-700">
-            <span className="font-semibold">Auto Loc:</span> drive more, save
-            more! Up to 20% off for members.
+          <p className="text-sm text-muted-foreground">
+            <span className="font-semibold text-foreground">AutoLoc CI :</span>{" "}
+            roulez plus, economisez plus ! Jusqu&apos;a 20% de reduction.
           </p>
         </div>
       </div>
