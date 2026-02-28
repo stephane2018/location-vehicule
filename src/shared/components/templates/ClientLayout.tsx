@@ -17,8 +17,6 @@ interface ClientLayoutProps {
 
 export default function ClientLayout({ children }: ClientLayoutProps) {
   return (
-    // Full-viewport flex column: header stays at top, footer stays at bottom,
-    // and <main> grows to fill any remaining vertical space.
     <div className="flex min-h-screen flex-col">
       <Header />
 
