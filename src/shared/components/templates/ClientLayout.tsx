@@ -25,7 +25,6 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       <main
         id="main-content"
         className="flex-1"
-        // Skip-to-content target for keyboard / screen-reader users.
         tabIndex={-1}
       >
         {children}
